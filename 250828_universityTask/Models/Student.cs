@@ -3,7 +3,16 @@
     public class Student
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string University { get; set; }
+        public string Name { get; set; } = null!;
+
+
+        // Optional foreign key to University
+        public int? UniversityId { get; set; }
+        public University? University { get; set; }
+
+
+        // Professor who added this student
+        public int? ProfessorAddedId { get; set; }
+        public Professor? ProfessorAdded { get; set; }
     }
 }

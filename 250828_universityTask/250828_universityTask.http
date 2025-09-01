@@ -1,6 +1,5 @@
 @_250828_universityTask_HostAddress = http://localhost:5018
 
-GET {{_250828_universityTask_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
+GET {{_250828_universityTask_HostAddress}}/api/students
+Accept: application/json
