@@ -33,22 +33,6 @@ namespace _250828_universityTask.Features.Students
                 });
             }
 
-            if (string.IsNullOrWhiteSpace(req.Name))
-            {
-                throw new ValidationException(new Dictionary<string, string[]>
-                {
-                    { "Name", new[] { "Student name is required." } }
-                });
-            }
-
-            if (req.Name.Length < 2 || req.Name.Length > 50)
-            {
-                throw new ValidationException(new Dictionary<string, string[]>
-                {
-                    { "Name", new[] { "Student name must be between 2 and 50 characters." } }
-                });
-            }
-
             var student = await _db.Students
                 .Include(s => s.University)
                 .Include(s => s.ProfessorAdded)

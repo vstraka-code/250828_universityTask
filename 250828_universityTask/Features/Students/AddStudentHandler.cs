@@ -14,6 +14,7 @@ namespace _250828_universityTask.Features.Students
         // constructor for AddStudentHandler => receives AppDbContext as parameter (db) from Dependency Injection (DI)
         public AddStudentHandler(AppDbContext db) => _db = db;
 
+        // CancellationToken is a signal => stop querying the database if the token is triggered
         public async Task<StudentDto> Handle(AddStudentCommand req, CancellationToken cancellationToken)
         {
             var professor = await _db.Professors
@@ -30,22 +31,6 @@ namespace _250828_universityTask.Features.Students
                 throw new ValidationException(new Dictionary<string, string[]>
                 {
                     { "Name", new[] { "A student with this name already exists in the university." } }
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(req.Name))
-            {
-                throw new ValidationException(new Dictionary<string, string[]>
-                {
-                    { "Name", new[] { "Student name is required." } }
-                });
-            }
-
-            if (req.Name.Length < 2 || req.Name.Length > 50)
-            {
-                throw new ValidationException(new Dictionary<string, string[]>
-                {
-                    { "Name", new[] { "Student name must be between 2 and 50 characters." } }
                 });
             }
 

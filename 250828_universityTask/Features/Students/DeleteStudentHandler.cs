@@ -8,7 +8,6 @@ namespace _250828_universityTask.Features.Students
         private readonly AppDbContext _db;
 
         public DeleteStudentHandler(AppDbContext db) => _db = db;
-
         public async Task<bool> Handle(DeleteStudentCommand req, CancellationToken cancellationToken)
         {
             var student = await _db.Students.FindAsync(req.StudentId);

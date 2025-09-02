@@ -23,7 +23,7 @@ namespace _250828_universityTask.Features.Students
 
             if (req.ProfessorId != null)
             {
-                var professor = await _db.Professors.FindAsync(req.ProfessorId);
+                var professor = await _db.Professors.FindAsync(new object?[] { req.ProfessorId }, cancellationToken);
                 if (professor == null) throw new UnauthorizedAccessException();
                 if (student.UniversityId != professor.UniversityId)
                     throw new UnauthorizedAccessException();

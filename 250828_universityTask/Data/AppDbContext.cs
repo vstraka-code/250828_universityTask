@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _250828_universityTask.Data
 {
+    // represents your database session
     public class AppDbContext : DbContext
     {
         // constructor
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options) { }
 
+        // overriding EF’s (Entity Framework) model building to customize relationships + seed data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -17,14 +19,14 @@ namespace _250828_universityTask.Data
                 .HasOne(s => s.University)
                 .WithMany(u => u.Students)
                 .HasForeignKey(s => s.UniversityId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.SetNull); // maybe also restrict?
 
             // University - Professor (one-to-many, required)
             modelBuilder.Entity<Professor>()
                 .HasOne(p => p.University)
                 .WithMany(u => u.Professors)
                 .HasForeignKey(p => p.UniversityId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // ??
 
             // Professor - Student (one-to-many, optional)
             modelBuilder.Entity<Student>()
@@ -53,6 +55,7 @@ namespace _250828_universityTask.Data
             );
         }
 
+        // tables
         public DbSet<Professor> Professors { get; set; }
 
         public DbSet<Student> Students { get; set; }
