@@ -1,0 +1,42 @@
+{
+  "Students": [
+    {
+      "Id": 1,
+      "Name": "Tom Sawyer",
+      "UniversityId": 1,
+      "ProfessorAddedId": 2
+    },
+    {
+      "Id": 2,
+      "Name": "Drache Kokosnuss",
+      "UniversityId": 2,
+      "ProfessorAddedId": 1
+    }
+  ],
+  "Professors": [
+    {
+      "Id": 1,
+      "Name": "Klaus Mikaelson",
+      "UniversityId": 2
+    },
+    {
+      "Id": 2,
+      "Name": "Sophia Goldberg",
+      "UniversityId": 1
+    }
+  ],
+  "Universities": [
+    {
+      "Id": 1,
+      "Name": "Massachusetts Institute of Technology (MIT)",
+      "City": "Cambridge",
+      "Country": "USA"
+    },
+    {
+      "Id": 2,
+      "Name": "Imperial College London",
+      "City": "London",
+      "Country": "UK"
+    }
+  ]
+}

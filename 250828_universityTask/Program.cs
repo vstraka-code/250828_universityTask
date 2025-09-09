@@ -1,4 +1,5 @@
 using _250828_universityTask.Auth;
+using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
 using _250828_universityTask.Middleware;
@@ -14,8 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 //AppDbContext is database session that manages tables, uses the connection string
-builder.Services.AddDbContext<AppDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<JsonDbContext>();
 
 // registers MediatR with the DI container
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -30,8 +32,12 @@ builder.RegisterAuthentication();
 builder.Services.AddValidatorsFromAssemblyContaining<AddStudentRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentRequestValidator>();
 
-// builder.Logging.ClearProviders();
-// builder.Logging.AddConsole();
+// Initializing MemoryCache
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<CacheService>();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // configuring Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -74,6 +80,10 @@ builder.Services.AddSwaggerGen(c =>
 // builds it
 var app = builder.Build();
 
+// Register Middleware for Exception Handling
+app.UseGlobalExceptionHandling();
+app.UseValidationMiddleware();
+
 app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
@@ -81,11 +91,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// Register Middleware for Exception Handling
-app.UseGlobalExceptionHandling();
-app.UseValidationMiddleware();
-
 
 // extracts + validates the JWT token from Authorization header
 app.UseAuthentication();

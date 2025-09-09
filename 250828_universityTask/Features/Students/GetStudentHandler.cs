@@ -1,29 +1,40 @@
-﻿using _250828_universityTask.Data;
+﻿using _250828_universityTask.Cache;
+using _250828_universityTask.Data;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace _250828_universityTask.Features.Students
 {
     public class GetStudentHandler : IRequestHandler<GetStudentQuery, StudentDto>
     {
-        private readonly AppDbContext _db;
+        //private readonly AppDbContext _db;
+        private readonly CacheService _cacheService;
 
-        public GetStudentHandler(AppDbContext db) => _db = db;
+        public GetStudentHandler(CacheService cacheService)
+        {
+            //_db = db;
+            _cacheService = cacheService;
+        }
 
         public async Task<StudentDto> Handle(GetStudentQuery req, CancellationToken cancellationToken)
         {
-            var student = await _db.Students
-                .Include(s => s.University)
-                .Include(s => s.ProfessorAdded)
-                .FirstOrDefaultAsync(s => s.Id == req.StudentId, cancellationToken);
+            // var students = await _cacheService.AllStudents();
+            var students = _cacheService.AllStudents();
+
+            var student = students.FirstOrDefault(p => p.Id == req.StudentId);
 
             if (student == null) throw new KeyNotFoundException();
 
             if (req.ProfessorId != null)
             {
-                var professor = await _db.Professors.FindAsync(new object?[] { req.ProfessorId }, cancellationToken);
+                // var professors = await _cacheService.AllProfessors();
+                var professors = _cacheService.AllProfessors();
+
+                var professor = professors.FirstOrDefault(p => p.Id == req.ProfessorId);
+
                 if (professor == null) throw new UnauthorizedAccessException();
                 if (student.UniversityId != professor.UniversityId)
                     throw new UnauthorizedAccessException();

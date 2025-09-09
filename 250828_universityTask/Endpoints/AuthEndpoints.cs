@@ -1,4 +1,5 @@
 ﻿using _250828_universityTask.Auth;
+using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
@@ -22,41 +23,52 @@ namespace _250828_universityTask.Endpoints
         {
             var authGroup = app.MapGroup("/api/auth");
 
-            authGroup.MapPost("/login/professor", async (LoginProfessorRequest req, AppDbContext db, IdentityService identityService, IOptions<JwtSettings> opts) =>
+            authGroup.MapPost("/login", async (Models.Requests.LoginRequest req, [FromServices] JsonDbContext json, [FromServices] IdentityService identityService, [FromServices] CacheService cacheService) =>
             {
-                var prof = await db.Professors.FindAsync(req.ProfessorId);
-                // demo password check, replace with hashed verify in real app
-                if (prof == null || req.Password != "test") return Results.Unauthorized();
+                var role = req.Role;
 
-                var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, prof.Id.ToString()),
-                new Claim(ClaimTypes.Role, "professor"),
-                new Claim("ProfessorId", prof.Id.ToString()),
-                new Claim("UniversityId", prof.UniversityId.ToString())
-            };
+                if (role == "p")
+                {
+                    var professors = cacheService.AllProfessors();
+                    // var professors = await cacheService.AllProfessors();
 
-                var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+                    var prof = professors.FirstOrDefault(p => p.Id == req.Id);
 
-                return Results.Ok(new AuthResponse(token));
-            });
+                    if (prof == null || req.Password != "test")
+                        return Results.Unauthorized();
 
-            authGroup.MapPost("/login/student", async (LoginStudentRequest req, AppDbContext db, IdentityService identityService) =>
-            {
-                var student = await db.Students.FindAsync(req.StudentId);
-                if (student == null || req.Password != "test") return Results.Unauthorized();
+                    var claims = new List<Claim>
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, prof.Id.ToString()),
+                        new Claim(ClaimTypes.Role, "professor"),
+                        new Claim("ProfessorId", prof.Id.ToString()),
+                        new Claim("UniversityId", prof.UniversityId.ToString())
+                    };
 
-                var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, student.Id.ToString()),
-                new Claim(ClaimTypes.Role, "student"),
-                new Claim("StudentId", student.Id.ToString())
-            };
-                if (student.UniversityId.HasValue)
-                    claims.Add(new Claim("UniversityId", student.UniversityId.Value.ToString()));
+                    var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+                    return Results.Ok(new AuthResponse(token));
 
-                var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
-                return Results.Ok(new AuthResponse(token));
+                } else if (role == "s")
+                {
+                    var students = cacheService.AllStudents();
+                    // var students = await cacheService.AllStudents();
+                    var stud = students.FirstOrDefault(s => s.Id == req.Id);
+
+                    if (stud == null || req.Password != "test")
+                        return Results.Unauthorized();
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, stud.Id.ToString()),
+                        new Claim(ClaimTypes.Role, "student"),
+                        new Claim("StudentId", stud.Id.ToString()),
+                    };
+
+                    var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+                    return Results.Ok(new AuthResponse(token));
+                }
+
+                return Results.Unauthorized();
             });
         }
     }

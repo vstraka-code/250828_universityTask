@@ -1,4 +1,5 @@
-﻿using _250828_universityTask.Data;
+﻿using _250828_universityTask.Cache;
+using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
@@ -9,21 +10,31 @@ namespace _250828_universityTask.Features.Students
 {
     public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, StudentDto>
     {
-        private readonly AppDbContext _db;
+        // private readonly AppDbContext _db;
+        private readonly CacheService _cacheService;
+        private readonly JsonDbContext _json;
 
-        public UpdateStudentHandler(AppDbContext db) => _db = db;
+        public UpdateStudentHandler(JsonDbContext json, CacheService cacheService)
+        {
+            // _db = db;
+            _cacheService = cacheService;
+            _json = json;
+        }
 
         public async Task<StudentDto> Handle(UpdateStudentCommand req, CancellationToken cancellationToken)
         {
-            var professor = await _db.Professors
-                .Include(p => p.University)
-                .FirstOrDefaultAsync(p => p.Id == req.ProfessorId);
+            // var professors = await _cacheService.AllProfessors();
+            var professors = _cacheService.AllProfessors();
+
+            var professor = professors.FirstOrDefault(p => p.Id == req.ProfessorId);
 
             if (professor == null)
                 throw new UnauthorizedAccessException();
 
-            var duplicate = await _db.Students
-                .AnyAsync(s => s.Name == req.Name && s.UniversityId == professor.UniversityId);
+            // var students = await _cacheService.AllStudents();
+            var students = _cacheService.AllStudents();
+
+            var duplicate = students.Any(s => s.Id != req.StudentId && s.Name == req.Name && s.UniversityId == professor.UniversityId);
 
             if (duplicate)
             {
@@ -33,18 +44,18 @@ namespace _250828_universityTask.Features.Students
                 });
             }
 
-            var student = await _db.Students
-                .Include(s => s.University)
-                .Include(s => s.ProfessorAdded)
-                .FirstOrDefaultAsync(s => s.Id == req.StudentId, cancellationToken);
+            var student = students.FirstOrDefault(p => p.Id == req.StudentId);
 
             if (student == null) throw new KeyNotFoundException();
 
-            if (student.UniversityId != (await _db.Professors.FindAsync(req.ProfessorId))?.UniversityId)
+            if (student.UniversityId != professor.UniversityId)
                 throw new UnauthorizedAccessException();
 
             student.Name = req.Name;
-            await _db.SaveChangesAsync(cancellationToken);
+            //await _db.SaveChangesAsync(cancellationToken);
+            _json.Save();
+
+            _cacheService.ClearStudentsCache();
 
             return new StudentDto(
                 student.Id,

@@ -1,4 +1,5 @@
-﻿using _250828_universityTask.Data;
+﻿using _250828_universityTask.Cache;
+using _250828_universityTask.Data;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
 using _250828_universityTask.Models;
@@ -21,7 +22,7 @@ namespace _250828_universityTask.Endpoints
             // GET All Students from the uni that the prof belongs to
             studentsGroup.MapGet("", async (ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorIdOrThrow();
+                var professorId = user.GetProfessorId();
                 var students = await mediator.Send(new GetAllStudentsQuery(professorId));
                 return Results.Ok(students);
             })
@@ -30,7 +31,7 @@ namespace _250828_universityTask.Endpoints
             // get specific Student with the id
             studentsGroup.MapGet("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorIdOrThrow();
+                var professorId = user.GetProfessorId();
                 var student = await mediator.Send(new GetStudentQuery(id, professorId));
                 return Results.Ok(student);
             })
@@ -39,7 +40,7 @@ namespace _250828_universityTask.Endpoints
             // get info about yourself as student
             studentsGroup.MapGet("/me", async (ClaimsPrincipal user, IMediator mediator) =>
             {
-                var studentId = user.GetStudentIdOrThrow();
+                var studentId = user.GetStudentId();
                 var student = await mediator.Send(new GetStudentQuery(studentId, null, studentId));
                 return Results.Ok(student);
             })
@@ -48,7 +49,7 @@ namespace _250828_universityTask.Endpoints
             // Prof can add new student
             studentsGroup.MapPost("", async (AddStudentRequest req, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorIdOrThrow();
+                var professorId = user.GetProfessorId();
                 var student = await mediator.Send(new AddStudentCommand(req.Name, professorId));
                 return Results.Created($"/api/students/{student.Id}", student);
             })
@@ -57,7 +58,7 @@ namespace _250828_universityTask.Endpoints
             // prof can edit student
             studentsGroup.MapPut("/{id:int}", async (int id, UpdateStudentRequest request, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorIdOrThrow();
+                var professorId = user.GetProfessorId();
                 var student = await mediator.Send(new UpdateStudentCommand(id, request.Name, professorId));
                 return Results.Ok(student);
             })
@@ -66,12 +67,19 @@ namespace _250828_universityTask.Endpoints
             // prof can delete student
             studentsGroup.MapDelete("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorIdOrThrow();
+                var professorId = user.GetProfessorId();
                 var deleted = await mediator.Send(new DeleteStudentCommand(id, professorId));
                 if (!deleted) return Results.NotFound();
                 return Results.NoContent();
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+
+            // prof can clear cache
+            studentsGroup.MapPost("/clear-cache", (CacheService _cacheService) =>
+            {
+                return _cacheService.ClearCache();
+            })
+                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor"});
         }
     }
 }
