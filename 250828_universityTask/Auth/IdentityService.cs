@@ -12,6 +12,10 @@ namespace _250828_universityTask.Auth
         private readonly JwtSettings? _settings;
         private readonly byte[] _key;
 
+        // factory for creating + writing tokens
+        private readonly JwtSecurityTokenHandler _tokenHandler = new();
+
+
         // Constructor
         public IdentityService(IOptions<JwtSettings> jwtSettings)
         {
@@ -24,21 +28,17 @@ namespace _250828_universityTask.Auth
             _key = Encoding.ASCII.GetBytes(_settings?.Key!);
         }
 
-        // factory for creating + writing tokens
-        private static JwtSecurityTokenHandler TokenHandler => new();
-
         // builds blueprint of token
         public SecurityToken CreateSecurityToken(ClaimsIdentity identity)
         {
             var tokenDesciptor = GetTokenDescriptor(identity);
-
-            return TokenHandler.CreateToken(tokenDesciptor);
+            return _tokenHandler.CreateToken(tokenDesciptor);
         }
 
         // Sec Token into a JWT string
         public string WriteToken(SecurityToken token)
         {
-            return TokenHandler.WriteToken(token);
+            return _tokenHandler.WriteToken(token);
         }
 
         // payload recipe
@@ -47,7 +47,7 @@ namespace _250828_universityTask.Auth
             return new SecurityTokenDescriptor()
             {
                 Subject = identity,
-                Expires = DateTime.Now.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(_settings.ExpiryHours),
                 Audience = _settings!.Audiences?[0]!,
                 Issuer = _settings!.Issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key),

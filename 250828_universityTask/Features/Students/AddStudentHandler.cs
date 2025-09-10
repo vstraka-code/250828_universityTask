@@ -23,7 +23,7 @@ namespace _250828_universityTask.Features.Students
         }
 
         // CancellationToken is a signal => stop querying the database if the token is triggered
-        public async Task<StudentDto> Handle(AddStudentCommand req, CancellationToken cancellationToken)
+        public Task<StudentDto> Handle(AddStudentCommand req, CancellationToken cancellationToken)
         {
             var professors = _cacheService.AllProfessors();
             // var professors = await _cacheService.AllProfessors();
@@ -64,11 +64,13 @@ namespace _250828_universityTask.Features.Students
 
             _cacheService.ClearStudentsCache();
 
-            return new StudentDto(
+            return Task.FromResult(
+                new StudentDto(
                 student.Id,
                 student.Name,
-                professor.University.Name,
-                professor.Name
+                professor.University.Name ?? "Unknown",
+                professor.Name ?? "Unknown"
+                )
             );
         }
     }

@@ -21,7 +21,7 @@ namespace _250828_universityTask.Features.Students
             _json = json;
         }
 
-        public async Task<StudentDto> Handle(UpdateStudentCommand req, CancellationToken cancellationToken)
+        public Task<StudentDto> Handle(UpdateStudentCommand req, CancellationToken cancellationToken)
         {
             // var professors = await _cacheService.AllProfessors();
             var professors = _cacheService.AllProfessors();
@@ -57,11 +57,13 @@ namespace _250828_universityTask.Features.Students
 
             _cacheService.ClearStudentsCache();
 
-            return new StudentDto(
+            return Task.FromResult(
+                new StudentDto(
                 student.Id,
                 student.Name,
-                student.University?.Name,
-                student.ProfessorAdded?.Name
+                student.University?.Name ?? "Unknown",
+                student.ProfessorAdded?.Name ?? "Unknown"
+                )
             );
         }
     }

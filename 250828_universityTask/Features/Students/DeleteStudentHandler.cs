@@ -18,13 +18,13 @@ namespace _250828_universityTask.Features.Students
             _json = json;
         }
 
-        public async Task<bool> Handle(DeleteStudentCommand req, CancellationToken cancellationToken)
+        public Task<bool> Handle(DeleteStudentCommand req, CancellationToken cancellationToken)
         {
             var students = _cacheService.AllStudents();
             // var students = await _cacheService.AllStudents();
             var student = students.FirstOrDefault(p => p.Id == req.StudentId);
 
-            if (student == null) return false;
+            if (student == null) return Task.FromResult(false);
 
             // var professors = await _cacheService.AllProfessors();
             var professors = _cacheService.AllProfessors();
@@ -42,7 +42,7 @@ namespace _250828_universityTask.Features.Students
 
             _cacheService.ClearStudentsCache();
 
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -19,57 +20,81 @@ namespace _250828_universityTask.Endpoints
 {
     public static class AuthEndpoints
     {
+        private const string ROLE_PROFESSOR = "professor";
+        private const string ROLE_STUDENT = "student";
         public static void MapAuthEndpoints(this WebApplication app)
         {
             var authGroup = app.MapGroup("/api/auth");
 
-            authGroup.MapPost("/login", async (Models.Requests.LoginRequest req, [FromServices] JsonDbContext json, [FromServices] IdentityService identityService, [FromServices] CacheService cacheService) =>
+            authGroup.MapPost("/login", (Models.Requests.LoginRequest req, JsonDbContext json, IdentityService identityService, CacheService cacheService) =>
             {
                 var role = req.Role;
+                var (uniId, verified) = VerifyPassword(req.Password, req.Id, role, cacheService);
 
-                if (role == "p")
+                if (!verified) return Results.Unauthorized();
+
+                if (role == ROLE_PROFESSOR || role == ROLE_STUDENT)
                 {
-                    var professors = cacheService.AllProfessors();
-                    // var professors = await cacheService.AllProfessors();
-
-                    var prof = professors.FirstOrDefault(p => p.Id == req.Id);
-
-                    if (prof == null || req.Password != "test")
-                        return Results.Unauthorized();
-
-                    var claims = new List<Claim>
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, prof.Id.ToString()),
-                        new Claim(ClaimTypes.Role, "professor"),
-                        new Claim("ProfessorId", prof.Id.ToString()),
-                        new Claim("UniversityId", prof.UniversityId.ToString())
-                    };
-
-                    var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
-                    return Results.Ok(new AuthResponse(token));
-
-                } else if (role == "s")
-                {
-                    var students = cacheService.AllStudents();
-                    // var students = await cacheService.AllStudents();
-                    var stud = students.FirstOrDefault(s => s.Id == req.Id);
-
-                    if (stud == null || req.Password != "test")
-                        return Results.Unauthorized();
-
-                    var claims = new List<Claim>
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, stud.Id.ToString()),
-                        new Claim(ClaimTypes.Role, "student"),
-                        new Claim("StudentId", stud.Id.ToString()),
-                    };
-
-                    var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+                    var token = CreateToken(identityService, req.Id, role, uniId);
                     return Results.Ok(new AuthResponse(token));
                 }
 
                 return Results.Unauthorized();
             });
+        }
+
+        private static string CreateToken(IdentityService identityService, int id, string role, int? uniId = null)
+        {
+            var claims = new List<Claim>
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
+                        new Claim(ClaimTypes.Role, role),
+                    };
+            if (role == ROLE_PROFESSOR)
+            {
+                claims.Add(new("ProfessorId", id.ToString()));
+                claims.Add(new("UniversityId", uniId?.ToString() ?? ""));
+            } else if (role == ROLE_STUDENT)
+            {
+                claims.Add(new("StudentId", id.ToString()));
+            }
+
+            var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+            return token;
+        }
+
+        private static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheService cacheService)
+        {
+            if (role == ROLE_PROFESSOR)
+            {
+                var professors = cacheService.AllProfessors();
+                // var professors = await cacheService.AllProfessors();
+                var prof = professors.FirstOrDefault(p => p.Id == id);
+
+                if (prof == null || password != "test")
+                {
+                    return (null, false);
+                } else
+                {
+                    return (prof.UniversityId, true);
+                }
+            } else if (role == ROLE_STUDENT)
+            {
+                var students = cacheService.AllStudents();
+                // var students = await cacheService.AllStudents();
+                var stud = students.FirstOrDefault(s => s.Id == id);
+
+                if (stud == null || password != "test")
+                {
+                    return (null, false);
+                }
+                else
+                {
+                    return (stud.UniversityId, true);
+                }
+            }
+
+            return (null, false);
         }
     }
 }

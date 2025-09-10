@@ -1,4 +1,5 @@
 ﻿using _250828_universityTask.Exceptions;
+using _250828_universityTask.Models.Dtos;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -35,38 +36,26 @@ namespace _250828_universityTask.Middleware
             try
             {
                 await _next(context);
-
-                if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
-                    await WriteJsonResponse(context, StatusCodes.Status401Unauthorized, "Unauthorized: invalid credentials or token.");
-
-                if (context.Response.StatusCode == StatusCodes.Status403Forbidden)
-                    await WriteJsonResponse(context, StatusCodes.Status403Forbidden, "Forbidden: you don't have permission for this action.");
-
-                if (context.Response.StatusCode == StatusCodes.Status404NotFound)
-                    await WriteJsonResponse(context, StatusCodes.Status404NotFound, "Resource not found.");
             }
             catch (Exceptions.ValidationException vex)
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await WriteJsonResponse(context, StatusCodes.Status400BadRequest, "Validation failed", vex.Errors);
+                _logger.LogWarning("Validation failed: {Message}", vex.Message);
             }
             catch (UnauthorizedAccessException uaex)
             {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await WriteJsonResponse(context, StatusCodes.Status403Forbidden, uaex.Message ?? "Forbidden");
                 _logger.LogWarning("Unauthorized access: {Message}", uaex.Message);
             }
             catch (KeyNotFoundException knfex)
             {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await WriteJsonResponse(context, StatusCodes.Status404NotFound, knfex.Message ?? "Resource not found");
                 _logger.LogWarning("Resource not found: {Message}", knfex.Message);
             }
             catch (Exception ex)
             {
+                await WriteJsonResponse(context, StatusCodes.Status500InternalServerError, "An unexpected error occurred."); // new { ex.Message, ex.StackTrace }
                 _logger.LogError(ex, "Unhandled exception occurred.");
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await WriteJsonResponse(context, StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
             }
         }
 
@@ -75,12 +64,7 @@ namespace _250828_universityTask.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
 
-            var payload = new
-            {
-                status = statusCode,
-                message,
-                errors
-            };
+            var payload = new ErrorResponse(statusCode, message, errors);
 
             await context.Response.WriteAsJsonAsync(payload);
         }

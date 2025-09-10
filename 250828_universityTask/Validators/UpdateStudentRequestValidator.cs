@@ -7,9 +7,7 @@ namespace _250828_universityTask.Validators
     {
         public UpdateStudentRequestValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Student name is required.")
-                .MaximumLength(50).WithMessage("Student name must not exceed 50 characters.");
+            RuleFor(x => x.Name).ApplyStudentNameRules();
         }
     }
 }
