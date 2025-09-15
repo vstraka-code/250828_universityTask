@@ -44,6 +44,7 @@ namespace _250828_universityTask.Features.Students
                 });
             }
 
+            // checks are there any students and finds the max + 1
             var id = (_json.Students.Any() ? _json.Students.Max(s => s.Id) : 0) + 1;
 
             var student = new Student

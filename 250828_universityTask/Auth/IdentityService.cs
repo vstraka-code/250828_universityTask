@@ -10,9 +10,9 @@ namespace _250828_universityTask.Auth
     public class IdentityService
     {
         private readonly JwtSettings? _settings;
-        private readonly byte[] _key;
+        private readonly byte[] _key; //signing key as raw bytes
 
-        // factory for creating + writing tokens
+        // factory for creating + writing tokens (from Microsoft)
         private readonly JwtSecurityTokenHandler _tokenHandler = new();
 
 
@@ -20,22 +20,24 @@ namespace _250828_universityTask.Auth
         public IdentityService(IOptions<JwtSettings> jwtSettings)
         {
             _settings = jwtSettings.Value;
+            // ensure everything required is present
             ArgumentNullException.ThrowIfNull(_settings);
             ArgumentNullException.ThrowIfNull(_settings.Key);
             ArgumentNullException.ThrowIfNull(_settings.Audiences);
             ArgumentNullException.ThrowIfNull(_settings.Audiences[0]);
             ArgumentNullException.ThrowIfNull(_settings.Issuer);
-            _key = Encoding.ASCII.GetBytes(_settings?.Key!);
+            _key = Encoding.ASCII.GetBytes(_settings.Key);
         }
 
-        // builds blueprint of token
+        // builds blueprint of token - just token object
+        // ClaimsIdentity = built-in .NET class representing user identity + claims (from authendpoints)
         public SecurityToken CreateSecurityToken(ClaimsIdentity identity)
         {
             var tokenDesciptor = GetTokenDescriptor(identity);
             return _tokenHandler.CreateToken(tokenDesciptor);
         }
 
-        // Sec Token into a JWT string
+        // Sec Token into a JWT string, this will be send to the client
         public string WriteToken(SecurityToken token)
         {
             return _tokenHandler.WriteToken(token);
@@ -56,3 +58,10 @@ namespace _250828_universityTask.Auth
         }
     }
 }
+
+// 1. create ClaimsIdentity in authendpoints
+// 2.CreateSecurityToken
+// 3.which calls GetTokenDescriptor
+// 4. WriteToken
+
+// identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));

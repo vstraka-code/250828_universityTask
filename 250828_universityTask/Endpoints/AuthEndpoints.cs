@@ -20,8 +20,8 @@ namespace _250828_universityTask.Endpoints
 {
     public static class AuthEndpoints
     {
-        private const string ROLE_PROFESSOR = "professor";
-        private const string ROLE_STUDENT = "student";
+        private const string ProfessorRole = "professor";
+        private const string StudentRole = "student";
         public static void MapAuthEndpoints(this WebApplication app)
         {
             var authGroup = app.MapGroup("/api/auth");
@@ -33,7 +33,7 @@ namespace _250828_universityTask.Endpoints
 
                 if (!verified) return Results.Unauthorized();
 
-                if (role == ROLE_PROFESSOR || role == ROLE_STUDENT)
+                if (role == ProfessorRole || role == StudentRole)
                 {
                     var token = CreateToken(identityService, req.Id, role, uniId);
                     return Results.Ok(new AuthResponse(token));
@@ -47,14 +47,14 @@ namespace _250828_universityTask.Endpoints
         {
             var claims = new List<Claim>
                     {
-                        new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
+                        new Claim(JwtRegisteredClaimNames.Sub, id.ToString()), //subject
                         new Claim(ClaimTypes.Role, role),
                     };
-            if (role == ROLE_PROFESSOR)
+            if (role == ProfessorRole)
             {
                 claims.Add(new("ProfessorId", id.ToString()));
-                claims.Add(new("UniversityId", uniId?.ToString() ?? ""));
-            } else if (role == ROLE_STUDENT)
+                claims.Add(new("UniversityId", uniId?.ToString() ?? "")); // if id !null convert to string, otherwise empty string
+            } else if (role == StudentRole)
             {
                 claims.Add(new("StudentId", id.ToString()));
             }
@@ -65,7 +65,7 @@ namespace _250828_universityTask.Endpoints
 
         private static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheService cacheService)
         {
-            if (role == ROLE_PROFESSOR)
+            if (role == ProfessorRole)
             {
                 var professors = cacheService.AllProfessors();
                 // var professors = await cacheService.AllProfessors();
@@ -78,7 +78,7 @@ namespace _250828_universityTask.Endpoints
                 {
                     return (prof.UniversityId, true);
                 }
-            } else if (role == ROLE_STUDENT)
+            } else if (role == StudentRole)
             {
                 var students = cacheService.AllStudents();
                 // var students = await cacheService.AllStudents();

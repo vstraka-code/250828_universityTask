@@ -6,6 +6,7 @@ namespace _250828_universityTask.Helpers
     {
         public static int GetProfessorId(this ClaimsPrincipal user)
         {
+            // claim.value is always string
             var claim = user.FindFirst("ProfessorId");
             if (claim != null)
                 return int.Parse(claim.Value);

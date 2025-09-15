@@ -9,7 +9,6 @@ using System.Threading;
 
 namespace _250828_universityTask.Cache
 {
-
     public class CacheService
     {
         // private readonly AppDbContext _db;
@@ -47,8 +46,8 @@ namespace _250828_universityTask.Cache
                 students = _json.Students;
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(45))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(45)) // resets expiration
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(1))
                     .SetPriority(CacheItemPriority.Normal);
 
                 _cache.Set(studentscacheKey, students, cacheEntryOptions);
@@ -68,6 +67,7 @@ namespace _250828_universityTask.Cache
             // var stopwatch = new Stopwatch();
             // stopwatch.Start();
 
+            // out assigns data to professors
             if (_cache.TryGetValue(professorscacheKey, out List<Professor> professors) && professors != null)
             {
                 _logger.Log(LogLevel.Information, "Professors found in cache.");
@@ -85,7 +85,7 @@ namespace _250828_universityTask.Cache
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromSeconds(45))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(1))
                     .SetPriority(CacheItemPriority.Normal);
 
                 _cache.Set(professorscacheKey, professors, cacheEntryOptions);
@@ -125,5 +125,4 @@ namespace _250828_universityTask.Cache
         }
 
     }
-
 }

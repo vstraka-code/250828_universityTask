@@ -19,7 +19,7 @@ namespace _250828_universityTask.Features.Students
             _cacheService = cacheService;
         }
 
-        public async Task<StudentDto> Handle(GetStudentQuery req, CancellationToken cancellationToken)
+        public Task<StudentDto> Handle(GetStudentQuery req, CancellationToken cancellationToken)
         {
             // var students = await _cacheService.AllStudents();
             var students = _cacheService.AllStudents();
@@ -49,11 +49,13 @@ namespace _250828_universityTask.Features.Students
                 throw new UnauthorizedAccessException();
             }
 
-            return new StudentDto(
+            return Task.FromResult(
+                new StudentDto(
                 student.Id,
                 student.Name,
                 student.University?.Name,
                 student.ProfessorAdded?.Name
+                )
             );
         }
     }

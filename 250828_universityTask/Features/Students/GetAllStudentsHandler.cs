@@ -17,7 +17,7 @@ namespace _250828_universityTask.Features.Students
             _cacheService = cacheService;
         }
 
-        public async Task<List<StudentDto>> Handle(GetAllStudentsQuery req, CancellationToken cancellationToken)
+        public Task<List<StudentDto>> Handle(GetAllStudentsQuery req, CancellationToken cancellationToken)
         {
             // var professors = await _cacheService.AllProfessors();
             var professors = _cacheService.AllProfessors();
@@ -27,7 +27,6 @@ namespace _250828_universityTask.Features.Students
 
             var studentsList = _cacheService.AllStudents();
             // var studentsList = await _cacheService.AllStudents();
-
 
             var students = studentsList
                 .Where(s => s.UniversityId == professor.UniversityId)
@@ -39,7 +38,7 @@ namespace _250828_universityTask.Features.Students
                 ))
                 .ToList();
 
-            return students;
+            return Task.FromResult(students);
         }
     }
 }

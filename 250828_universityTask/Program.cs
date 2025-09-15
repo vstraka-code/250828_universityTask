@@ -6,17 +6,16 @@ using _250828_universityTask.Middleware;
 using _250828_universityTask.Validators;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 // initializes app builder
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//AppDbContext is database session that manages tables, uses the connection string
+// AppDbContext is database session that manages tables, uses the connection string
 // builder.Services.AddDbContext<AppDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddSingleton<JsonDbContext>();
 
 // registers MediatR with the DI container
@@ -37,7 +36,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<CacheService>();
 
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+builder.Logging.AddConsole(); // right now only used in cache + exception
 
 // configuring Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -80,9 +79,12 @@ builder.Services.AddSwaggerGen(c =>
 // builds it
 var app = builder.Build();
 
-// Register Middleware for Exception Handling
-app.UseGlobalExceptionHandling();
-app.UseValidationMiddleware();
+// Register Middleware for Exception Handling, can be useful for readability
+// app.UseGlobalExceptionHandling();
+// app.UseValidationMiddleware();
+
+app.UseMiddleware<ValidationMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

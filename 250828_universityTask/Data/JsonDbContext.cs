@@ -6,14 +6,17 @@ using System.Text.Json.Nodes;
 
 namespace _250828_universityTask.Data
 {
+    // custom in-memory DB
     public class JsonDbContext
     {
         private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "data", "database.json");
 
+        // representing tables
         public List<Professor> Professors { get; set; }
         public List<Student> Students { get; set; }
         public List<University> Universities { get; set; }
 
+        // constructor
         public JsonDbContext()
         {
             Students = new List<Student>();
@@ -24,7 +27,6 @@ namespace _250828_universityTask.Data
 
         public void Load()
         {
-
             if (!File.Exists(_filePath))
             {
                 Save();
@@ -35,14 +37,15 @@ namespace _250828_universityTask.Data
 
             if (!string.IsNullOrWhiteSpace(writableDoc))
             {
+                // convert JSON string back into objects
                 var data = JsonSerializer.Deserialize<JsonData>(writableDoc);
                 if (data != null)
                 {
-                    Students = data.Students?.Select(MapStudent).ToList() ?? new();
+                    Students = data.Students?.Select(MapStudent).ToList() ?? new(); // if deserialization = null => use empty list
                     Professors = data.Professors?.Select(MapProfessor).ToList() ?? new();
                     Universities = data.Universities?.Select(MapUniversity).ToList() ?? new();
 
-                    MapVariables();
+                    MapOtherVariables();
                 }
             }
         }
@@ -51,6 +54,7 @@ namespace _250828_universityTask.Data
         {
             var data = new
             {
+                // select maps objects to records
                 Students = Students.Select(s => new StudentRecord
                 (
                     s.Id,
@@ -75,8 +79,10 @@ namespace _250828_universityTask.Data
                 )).ToList()
             };
 
+            // back to to JSON string
             var json = JsonSerializer.Serialize(data, new JsonSerializerOptions
             {
+                // humand-readable - you don't need it above because writing is only here
                 WriteIndented = true
             });
 
@@ -106,7 +112,7 @@ namespace _250828_universityTask.Data
             Country = u.Country
         };
 
-        private void MapVariables()
+        private void MapOtherVariables() // sets navigation properties
         {
             foreach (var student in Students)
             {
