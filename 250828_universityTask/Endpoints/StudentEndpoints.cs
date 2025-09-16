@@ -22,55 +22,42 @@ namespace _250828_universityTask.Endpoints
             // GET All Students from the uni that the prof belongs to
             studentsGroup.MapGet("", async (ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorId();
-                var students = await mediator.Send(new GetAllStudentsQuery(professorId));
-                return Results.Ok(students);
+                return await GetAllStudentsLogic(user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // get specific Student with the id
             studentsGroup.MapGet("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorId();
-                var student = await mediator.Send(new GetStudentQuery(id, professorId));
-                return Results.Ok(student);
+                return await GetStudentLogic(id, user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // get info about yourself as student
             studentsGroup.MapGet("/me", async (ClaimsPrincipal user, IMediator mediator) =>
             {
-                var studentId = user.GetStudentId();
-                var student = await mediator.Send(new GetStudentQuery(studentId, null, studentId));
-                return Results.Ok(student);
+                return await GetStudentAsStudentLogic(user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "student" });
 
             // Prof can add new student
             studentsGroup.MapPost("", async (AddStudentRequest req, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorId();
-                var student = await mediator.Send(new AddStudentCommand(req.Name, professorId));
-                return Results.Created($"/api/students/{student.Id}", student);
+                return await AddStudentLogic(req, user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // prof can edit student
             studentsGroup.MapPut("/{id:int}", async (int id, UpdateStudentRequest request, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorId();
-                var student = await mediator.Send(new UpdateStudentCommand(id, request.Name, professorId));
-                return Results.Ok(student);
+                return await UpdateStudentLogic(id, request, user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // prof can delete student
             studentsGroup.MapDelete("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator) =>
             {
-                var professorId = user.GetProfessorId();
-                var deleted = await mediator.Send(new DeleteStudentCommand(id, professorId));
-                if (!deleted) return Results.NotFound();
-                return Results.NoContent();
+                return await DeleteStudentLogic(id, user, mediator);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
@@ -80,6 +67,49 @@ namespace _250828_universityTask.Endpoints
                 return _cacheService.ClearCache();
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor"});
+        }
+
+        public static async Task<IResult> AddStudentLogic(AddStudentRequest req, ClaimsPrincipal user, IMediator mediator)
+        {
+            var professorId = user.GetProfessorId();
+            var student = await mediator.Send(new AddStudentCommand(req.Name, professorId));
+            return Results.Created($"/api/students/{student.Id}", student);
+        }
+
+        public static async Task<IResult> DeleteStudentLogic(int id, ClaimsPrincipal user, IMediator mediator)
+        {
+            var professorId = user.GetProfessorId();
+            var deleted = await mediator.Send(new DeleteStudentCommand(id, professorId));
+            if (!deleted) return Results.NotFound();
+            return Results.NoContent();
+        }
+
+        public static async Task<IResult> UpdateStudentLogic(int id, UpdateStudentRequest request, ClaimsPrincipal user, IMediator mediator)
+        {
+            var professorId = user.GetProfessorId();
+            var student = await mediator.Send(new UpdateStudentCommand(id, request.Name, professorId));
+            return Results.Ok(student);
+        }
+
+        public static async Task<IResult> GetAllStudentsLogic(ClaimsPrincipal user, IMediator mediator)
+        {
+            var professorId = user.GetProfessorId();
+            var students = await mediator.Send(new GetAllStudentsQuery(professorId));
+            return Results.Ok(students);
+        }
+
+        public static async Task<IResult> GetStudentLogic(int id, ClaimsPrincipal user, IMediator mediator)
+        {
+            var professorId = user.GetProfessorId();
+            var student = await mediator.Send(new GetStudentQuery(id, professorId));
+            return Results.Ok(student);
+        }
+
+        public static async Task<IResult> GetStudentAsStudentLogic(ClaimsPrincipal user, IMediator mediator)
+        {
+            var studentId = user.GetStudentId();
+            var student = await mediator.Send(new GetStudentQuery(studentId, null, studentId));
+            return Results.Ok(student);
         }
     }
 }

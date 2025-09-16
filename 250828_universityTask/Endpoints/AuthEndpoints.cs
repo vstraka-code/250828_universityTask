@@ -14,8 +14,10 @@ using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
+[assembly: InternalsVisibleTo("250828_universityTaskTests")]
 namespace _250828_universityTask.Endpoints
 {
     public static class AuthEndpoints
@@ -28,22 +30,27 @@ namespace _250828_universityTask.Endpoints
 
             authGroup.MapPost("/login", (Models.Requests.LoginRequest req, JsonDbContext json, IdentityService identityService, CacheService cacheService) =>
             {
-                var role = req.Role;
-                var (uniId, verified) = VerifyPassword(req.Password, req.Id, role, cacheService);
-
-                if (!verified) return Results.Unauthorized();
-
-                if (role == ProfessorRole || role == StudentRole)
-                {
-                    var token = CreateToken(identityService, req.Id, role, uniId);
-                    return Results.Ok(new AuthResponse(token));
-                }
-
-                return Results.Unauthorized();
+                return LoginLogic(req, identityService, cacheService);
             });
         }
 
-        private static string CreateToken(IdentityService identityService, int id, string role, int? uniId = null)
+        public static IResult LoginLogic(Models.Requests.LoginRequest req, IdentityService identityService, CacheService cacheService)
+        {
+            var role = req.Role;
+            var (uniId, verified) = VerifyPassword(req.Password, req.Id, role, cacheService);
+
+            if (!verified) return Results.Unauthorized();
+
+            if (role == ProfessorRole || role == StudentRole)
+            {
+                var token = CreateToken(identityService, req.Id, role, uniId);
+                return Results.Ok(new AuthResponse(token));
+            }
+
+            return Results.Unauthorized();
+        }
+
+        internal static string CreateToken(IdentityService identityService, int id, string role, int? uniId = null)
         {
             var claims = new List<Claim>
                     {
@@ -63,7 +70,7 @@ namespace _250828_universityTask.Endpoints
             return token;
         }
 
-        private static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheService cacheService)
+        internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheService cacheService)
         {
             if (role == ProfessorRole)
             {
