@@ -11,11 +11,11 @@ namespace _250828_universityTask.Features.Students
     public class AddStudentHandler : IRequestHandler<AddStudentCommand, StudentDto>
     {
         // private readonly AppDbContext _db;
-        private readonly CacheService _cacheService;
-        private readonly JsonDbContext _json;
+        private readonly CacheServiceWithoutExtension _cacheService;
+        private readonly IJsonDbContext _json;
 
         // constructor for AddStudentHandler => receives AppDbContext as parameter (db) from Dependency Injection (DI)
-        public AddStudentHandler(CacheService cacheService, JsonDbContext json)
+        public AddStudentHandler(CacheServiceWithoutExtension cacheService, IJsonDbContext json)
         {
             // _db = db;
             _cacheService = cacheService;
@@ -75,5 +75,4 @@ namespace _250828_universityTask.Features.Students
             );
         }
     }
-
 }

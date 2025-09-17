@@ -7,9 +7,9 @@ using System.Text.Json.Nodes;
 namespace _250828_universityTask.Data
 {
     // custom in-memory DB
-    public class JsonDbContext
+    public class JsonDbContext : IJsonDbContext
     {
-        private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "data", "database.json");
+        private readonly string _filePath = @"C:\Users\stv\source\repos\250828_universityTask\250828_universityTask\Data\database.json";
 
         // representing tables
         public List<Professor> Professors { get; set; }
@@ -50,7 +50,7 @@ namespace _250828_universityTask.Data
             }
         }
 
-        public void Save()
+        public virtual void Save()
         {
             var data = new
             {

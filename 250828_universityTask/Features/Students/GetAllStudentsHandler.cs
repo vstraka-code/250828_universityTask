@@ -9,9 +9,9 @@ namespace _250828_universityTask.Features.Students
     public class GetAllStudentsHandler : IRequestHandler<GetAllStudentsQuery, List<StudentDto>>
     {
         //private readonly AppDbContext _db;
-        private readonly CacheService _cacheService;
+        private readonly CacheServiceWithoutExtension _cacheService;
 
-        public GetAllStudentsHandler(CacheService cacheService)
+        public GetAllStudentsHandler(CacheServiceWithoutExtension cacheService)
         {
             //_db = db;
             _cacheService = cacheService;

@@ -11,10 +11,10 @@ namespace _250828_universityTask.Features.Students
     public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, StudentDto>
     {
         // private readonly AppDbContext _db;
-        private readonly CacheService _cacheService;
-        private readonly JsonDbContext _json;
+        private readonly CacheServiceWithoutExtension _cacheService;
+        private readonly IJsonDbContext _json;
 
-        public UpdateStudentHandler(JsonDbContext json, CacheService cacheService)
+        public UpdateStudentHandler(IJsonDbContext json, CacheServiceWithoutExtension cacheService)
         {
             // _db = db;
             _cacheService = cacheService;

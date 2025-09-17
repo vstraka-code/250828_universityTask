@@ -7,18 +7,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
+/*
 namespace _250828_universityTask.Cache
 {
     public class CacheService
     {
         // private readonly AppDbContext _db;
-        private readonly JsonDbContext _json;
+        private readonly IJsonDbContext _json;
         private readonly IMemoryCache _cache;
         private readonly ILogger<CacheService> _logger;
         private readonly string studentscacheKey = "studentsCacheKey";
         private readonly string professorscacheKey = "professorsCacheKey";
 
-        public CacheService(JsonDbContext json, IMemoryCache cache, ILogger<CacheService> logger)
+        public CacheService(IJsonDbContext json, IMemoryCache cache, ILogger<CacheService> logger)
         {
             _json = json;
             _cache = cache;
@@ -126,3 +127,4 @@ namespace _250828_universityTask.Cache
 
     }
 }
+*/

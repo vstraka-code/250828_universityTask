@@ -16,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddDbContext<AppDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSingleton<JsonDbContext>();
+// builder.Services.AddSingleton<JsonDbContext>();
+builder.Services.AddSingleton<IJsonDbContext, JsonDbContext>();
 
 // registers MediatR with the DI container
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -32,8 +33,10 @@ builder.Services.AddValidatorsFromAssemblyContaining<AddStudentRequestValidator>
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentRequestValidator>();
 
 // Initializing MemoryCache
-builder.Services.AddMemoryCache();
-builder.Services.AddScoped<CacheService>();
+// builder.Services.AddMemoryCache();
+// builder.Services.AddScoped<CacheService>();
+builder.Services.AddSingleton<Cache>();
+builder.Services.AddScoped<CacheServiceWithoutExtension>();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // right now only used in cache + exception

@@ -62,7 +62,7 @@ namespace _250828_universityTask.Endpoints
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // prof can clear cache
-            studentsGroup.MapPost("/clear-cache", (CacheService _cacheService) =>
+            studentsGroup.MapPost("/clear-cache", (CacheServiceWithoutExtension _cacheService) =>
             {
                 return _cacheService.ClearCache();
             })

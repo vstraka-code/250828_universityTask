@@ -8,10 +8,10 @@ namespace _250828_universityTask.Features.Students
     {
 
         // private readonly AppDbContext _db;
-        private readonly CacheService _cacheService;
-        private readonly JsonDbContext _json;
+        private readonly CacheServiceWithoutExtension _cacheService;
+        private readonly IJsonDbContext _json;
 
-        public DeleteStudentHandler(JsonDbContext json, CacheService cacheService)
+        public DeleteStudentHandler(IJsonDbContext json, CacheServiceWithoutExtension cacheService)
         {
             // _db = db;
             _cacheService = cacheService;

@@ -1,21 +1,20 @@
 ﻿using _250828_universityTask.Auth;
 using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
+using _250828_universityTask.Features.Professors;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
 using _250828_universityTask.Models.Dtos;
 using _250828_universityTask.Models.Requests;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 [assembly: InternalsVisibleTo("250828_universityTaskTests")]
 namespace _250828_universityTask.Endpoints
@@ -28,13 +27,18 @@ namespace _250828_universityTask.Endpoints
         {
             var authGroup = app.MapGroup("/api/auth");
 
-            authGroup.MapPost("/login", (Models.Requests.LoginRequest req, JsonDbContext json, IdentityService identityService, CacheService cacheService) =>
+            authGroup.MapPost("/login", (LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService) =>
             {
                 return LoginLogic(req, identityService, cacheService);
             });
+
+            authGroup.MapPost("/register", (RegistrationRequest req, IMediator mediator) =>
+            {
+                return RegisterLogic(req, mediator);
+            });
         }
 
-        public static IResult LoginLogic(Models.Requests.LoginRequest req, IdentityService identityService, CacheService cacheService)
+        public static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService)
         {
             var role = req.Role;
             var (uniId, verified) = VerifyPassword(req.Password, req.Id, role, cacheService);
@@ -48,6 +52,16 @@ namespace _250828_universityTask.Endpoints
             }
 
             return Results.Unauthorized();
+        }
+
+        public static async Task<IResult> RegisterLogic(RegistrationRequest req, IMediator mediator)
+        {
+            var professorName = req.Name;
+            var professorUniId = req.UniId;
+
+            var professor = await mediator.Send(new AddProfessorCommand(professorName, professorUniId));
+
+            return Results.Created($"/api/auth/register/{professor.Id}", professor);
         }
 
         internal static string CreateToken(IdentityService identityService, int id, string role, int? uniId = null)
@@ -70,7 +84,7 @@ namespace _250828_universityTask.Endpoints
             return token;
         }
 
-        internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheService cacheService)
+        internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheServiceWithoutExtension cacheService)
         {
             if (role == ProfessorRole)
             {

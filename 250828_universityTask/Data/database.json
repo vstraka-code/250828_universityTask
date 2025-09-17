@@ -7,8 +7,26 @@
       "ProfessorAddedId": 2
     },
     {
-      "Id": 2,
-      "Name": "Drache Kokosnuss",
+      "Id": 5,
+      "Name": "Klaus Thomas",
+      "UniversityId": 1,
+      "ProfessorAddedId": 4
+    },
+    {
+      "Id": 7,
+      "Name": "Klara Thomas",
+      "UniversityId": 1,
+      "ProfessorAddedId": 4
+    },
+    {
+      "Id": 8,
+      "Name": "Florian",
+      "UniversityId": 2,
+      "ProfessorAddedId": 1
+    },
+    {
+      "Id": 9,
+      "Name": "Sasa",
       "UniversityId": 2,
       "ProfessorAddedId": 1
     }
@@ -22,6 +40,16 @@
     {
       "Id": 2,
       "Name": "Sophia Goldberg",
+      "UniversityId": 1
+    },
+    {
+      "Id": 3,
+      "Name": "Paris Klee",
+      "UniversityId": 1
+    },
+    {
+      "Id": 4,
+      "Name": "Klee Paris",
       "UniversityId": 1
     }
   ],
