@@ -35,14 +35,12 @@ namespace _250828_universityTask.Features.Students
 
                 var professor = professors.FirstOrDefault(p => p.Id == req.ProfessorId);
 
-                if (professor == null) throw new UnauthorizedAccessException();
-                if (student.UniversityId != professor.UniversityId)
-                    throw new UnauthorizedAccessException();
+                if (professor == null || student.UniversityId != professor.UniversityId) throw new UnauthorizedAccessException();
+
             }
             else if (req.CurrentStudentId != null)
             {
-                if (student.Id != req.CurrentStudentId)
-                    throw new UnauthorizedAccessException();
+                if (student.Id != req.CurrentStudentId) throw new UnauthorizedAccessException();
             }
             else
             {

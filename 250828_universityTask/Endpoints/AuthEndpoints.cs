@@ -4,12 +4,16 @@ using _250828_universityTask.Data;
 using _250828_universityTask.Features.Professors;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models.Dtos;
 using _250828_universityTask.Models.Requests;
+using _250828_universityTask.Validators;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
@@ -23,65 +27,117 @@ namespace _250828_universityTask.Endpoints
     {
         private const string ProfessorRole = "professor";
         private const string StudentRole = "student";
+        private static Boolean exisiting = false;
+
+        private static string mess = "";
+        private static LoggerTopics topic = LoggerTopics.AuthEndpoints;
         public static void MapAuthEndpoints(this WebApplication app)
         {
             var authGroup = app.MapGroup("/api/auth");
 
-            authGroup.MapPost("/login", (LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService) =>
+            authGroup.MapPost("/login", (LoginRequest req, IValidator<LoginRequest> validator, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider) =>
             {
-                return LoginLogic(req, identityService, cacheService);
+                var validationResult = validator.Validate(req);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors
+                        .GroupBy(e => e.PropertyName)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(e => e.ErrorMessage).ToArray()
+                        );
+
+                    throw new Exceptions.ValidationException(errors);
+                }
+
+                return LoginLogic(req, identityService, cacheService, fileLoggerProvider);
             });
 
-            authGroup.MapPost("/register", (RegistrationRequest req, IMediator mediator) =>
+            authGroup.MapPost("/register", (RegistrationRequest req, IValidator<RegistrationRequest> validator, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                return RegisterLogic(req, mediator);
+                var validationResult = validator.Validate(req);
+                if (!validationResult.IsValid)
+                {
+                    var errors = validationResult.Errors
+                        .GroupBy(e => e.PropertyName)
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(e => e.ErrorMessage).ToArray()
+                        );
+
+                    throw new Exceptions.ValidationException(errors);
+                }
+
+                return RegisterLogic(req, mediator, fileLoggerProvider);
             });
         }
 
-        public static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService)
+        public static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider)
         {
+
+            if (req.Id is null)
+            {
+                mess = "No ID provided in login request.";
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                throw new UnauthorizedAccessException();
+            }
+
             var role = req.Role;
-            var (uniId, verified) = VerifyPassword(req.Password, req.Id, role, cacheService);
+            var (uniId, verified) = VerifyPassword(req.Password, req.Id.Value, role, cacheService);
 
-            if (!verified) return Results.Unauthorized();
+            if (!exisiting)
+            {
+                mess = "ID: " + req.Id + " not exisiting. Invalid ID.";
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
+                throw new UnauthorizedAccessException();
+
+            } else if (!verified)
+            {
+                if (role != ProfessorRole && role != StudentRole)
+                {
+                    mess = "Tried login in with undefined role: " + role + ", with id " + req.Id;
+                    fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                } else
+                {
+                    mess = role + " with id " + req.Id + " tried login in with wrong password.";
+                    fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                }
+
+                throw new UnauthorizedAccessException();
+            }
+            
             if (role == ProfessorRole || role == StudentRole)
             {
-                var token = CreateToken(identityService, req.Id, role, uniId);
+                var token = identityService.CreateToken(req.Id.Value, role, uniId);
+
+                mess = "Login as " + role + " successful with id " + req.Id;
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+
                 return Results.Ok(new AuthResponse(token));
             }
 
-            return Results.Unauthorized();
+            throw new UnauthorizedAccessException();
         }
 
-        public static async Task<IResult> RegisterLogic(RegistrationRequest req, IMediator mediator)
+        public static async Task<IResult> RegisterLogic(RegistrationRequest req, IMediator mediator, FileLoggerProvider fileLoggerProvider)
         {
+            if (req.UniId is null)
+            {
+                mess = "No Uni ID provided in registration request.";
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                throw new UnauthorizedAccessException();
+            }
+
             var professorName = req.Name;
-            var professorUniId = req.UniId;
+            var professorUniId = req.UniId.Value;
 
             var professor = await mediator.Send(new AddProfessorCommand(professorName, professorUniId));
 
+            mess = "Registration as professor successful with id " + professor.Id;
+            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+
             return Results.Created($"/api/auth/register/{professor.Id}", professor);
-        }
-
-        internal static string CreateToken(IdentityService identityService, int id, string role, int? uniId = null)
-        {
-            var claims = new List<Claim>
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, id.ToString()), //subject
-                        new Claim(ClaimTypes.Role, role),
-                    };
-            if (role == ProfessorRole)
-            {
-                claims.Add(new("ProfessorId", id.ToString()));
-                claims.Add(new("UniversityId", uniId?.ToString() ?? "")); // if id !null convert to string, otherwise empty string
-            } else if (role == StudentRole)
-            {
-                claims.Add(new("StudentId", id.ToString()));
-            }
-
-            var token = identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
-            return token;
         }
 
         internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheServiceWithoutExtension cacheService)
@@ -91,6 +147,7 @@ namespace _250828_universityTask.Endpoints
                 var professors = cacheService.AllProfessors();
                 // var professors = await cacheService.AllProfessors();
                 var prof = professors.FirstOrDefault(p => p.Id == id);
+                if (prof != null) exisiting = true;
 
                 if (prof == null || password != "test")
                 {
@@ -104,6 +161,7 @@ namespace _250828_universityTask.Endpoints
                 var students = cacheService.AllStudents();
                 // var students = await cacheService.AllStudents();
                 var stud = students.FirstOrDefault(s => s.Id == id);
+                if (stud != null) exisiting = true;
 
                 if (stud == null || password != "test")
                 {

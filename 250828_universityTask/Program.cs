@@ -2,7 +2,9 @@ using _250828_universityTask.Auth;
 using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Middleware;
+using _250828_universityTask.Models.Requests;
 using _250828_universityTask.Validators;
 using FluentValidation;
 using MediatR;
@@ -31,6 +33,9 @@ builder.RegisterAuthentication();
 // Register FluentValidation validators
 builder.Services.AddValidatorsFromAssemblyContaining<AddStudentRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateStudentRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<RegistrationRequest>();
+
 
 // Initializing MemoryCache
 // builder.Services.AddMemoryCache();
@@ -39,7 +44,8 @@ builder.Services.AddSingleton<Cache>();
 builder.Services.AddScoped<CacheServiceWithoutExtension>();
 
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole(); // right now only used in cache + exception
+builder.Logging.AddConsole();
+builder.Services.AddSingleton<FileLoggerProvider>();
 
 // configuring Swagger
 builder.Services.AddEndpointsApiExplorer();

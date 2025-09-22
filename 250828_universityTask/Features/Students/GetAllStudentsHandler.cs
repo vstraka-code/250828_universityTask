@@ -25,7 +25,7 @@ namespace _250828_universityTask.Features.Students
 
             if (professor == null) throw new UnauthorizedAccessException();
 
-            var studentsList = _cacheService.AllStudents();
+            var studentsList = _cacheService.AllStudents() ?? throw new KeyNotFoundException();
             // var studentsList = await _cacheService.AllStudents();
 
             var students = studentsList

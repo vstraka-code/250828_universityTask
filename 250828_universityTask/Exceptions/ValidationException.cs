@@ -1,4 +1,6 @@
-﻿namespace _250828_universityTask.Exceptions
+﻿using System.Threading.Tasks.Dataflow;
+
+namespace _250828_universityTask.Exceptions
 {
     public class ValidationException : Exception
     {

@@ -13,8 +13,9 @@ namespace _250828_universityTaskTests.Features.Students
     public class AddStudentHandlerTests
     {
         private CancellationToken cancellationToken;
-        private CacheService _cacheService;
+        private CacheServiceWithoutExtension _cacheService;
         private AddStudentHandler _handler;
+        private readonly Cache _cache;
 
         [TestInitialize]
         public void Setup()
@@ -37,9 +38,9 @@ namespace _250828_universityTaskTests.Features.Students
             };
             jsonDb.When(x => x.Save()).Do(_ => { });
 
-            var logger = Substitute.For<ILogger<CacheService>>();
+            var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
             var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheService(jsonDb, memoryCache, logger);
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
             _handler = new AddStudentHandler(_cacheService, jsonDb);
         }
 

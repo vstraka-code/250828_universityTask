@@ -26,8 +26,9 @@ namespace _250828_universityTaskTests.Endpoints
     [TestClass]
     public class AuthEndpointsTests
     {
-        private CacheService _cacheService;
+        private CacheServiceWithoutExtension _cacheService;
         private IdentityService _identityService;
+        private readonly Cache _cache;
 
         [TestInitialize]
         public void Setup()
@@ -44,9 +45,9 @@ namespace _250828_universityTaskTests.Endpoints
             }
             };
 
-            var logger = Substitute.For<ILogger<CacheService>>();
-            var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheService(jsonDb, memoryCache, logger);
+            var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
+            // var memoryCache = new MemoryCache(new MemoryCacheOptions());
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
             
             var _jwtSettings = new JwtSettings
             {
@@ -109,16 +110,6 @@ namespace _250828_universityTaskTests.Endpoints
 
             // Assert
             Assert.IsTrue(res.GetType().Name.StartsWith("Unauthorized"));
-        }
-
-        [TestMethod]
-        public void Should_Return_JWT_Token()
-        {
-            // Arrange - Act
-            var token = AuthEndpoints.CreateToken(_identityService, 1, "professor", 1);
-
-            // Assert
-            Assert.IsFalse(string.IsNullOrEmpty(token));
         }
 
         [TestMethod]

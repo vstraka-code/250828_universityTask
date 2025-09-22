@@ -13,12 +13,6 @@
       "ProfessorAddedId": 4
     },
     {
-      "Id": 7,
-      "Name": "Klara Thomas",
-      "UniversityId": 1,
-      "ProfessorAddedId": 4
-    },
-    {
       "Id": 8,
       "Name": "Florian",
       "UniversityId": 2,
@@ -29,6 +23,12 @@
       "Name": "Sasa",
       "UniversityId": 2,
       "ProfessorAddedId": 1
+    },
+    {
+      "Id": 10,
+      "Name": "Rudolph Hollunder",
+      "UniversityId": 1,
+      "ProfessorAddedId": 6
     }
   ],
   "Professors": [
@@ -50,6 +50,21 @@
     {
       "Id": 4,
       "Name": "Klee Paris",
+      "UniversityId": 1
+    },
+    {
+      "Id": 5,
+      "Name": "Hayley Blume",
+      "UniversityId": 1
+    },
+    {
+      "Id": 6,
+      "Name": "Hayley Blume II",
+      "UniversityId": 1
+    },
+    {
+      "Id": 7,
+      "Name": "Klaus Haul",
       "UniversityId": 1
     }
   ],

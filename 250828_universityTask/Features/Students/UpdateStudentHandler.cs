@@ -28,8 +28,7 @@ namespace _250828_universityTask.Features.Students
 
             var professor = professors.FirstOrDefault(p => p.Id == req.ProfessorId);
 
-            if (professor == null)
-                throw new UnauthorizedAccessException();
+            if (professor == null) throw new UnauthorizedAccessException();
 
             // var students = await _cacheService.AllStudents();
             var students = _cacheService.AllStudents();
@@ -48,8 +47,7 @@ namespace _250828_universityTask.Features.Students
 
             if (student == null) throw new KeyNotFoundException();
 
-            if (student.UniversityId != professor.UniversityId)
-                throw new UnauthorizedAccessException();
+            if (student.UniversityId != professor.UniversityId) throw new UnauthorizedAccessException();
 
             student.Name = req.Name;
             //await _db.SaveChangesAsync(cancellationToken);

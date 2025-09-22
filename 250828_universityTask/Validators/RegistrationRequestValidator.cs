@@ -3,11 +3,12 @@ using FluentValidation;
 
 namespace _250828_universityTask.Validators
 {
-    public class UpdateStudentRequestValidator : AbstractValidator<UpdateStudentRequest>
+    public class RegistrationRequestValidator : AbstractValidator<RegistrationRequest>
     {
-        public UpdateStudentRequestValidator()
+        public RegistrationRequestValidator()
         {
             RuleFor(x => x.Name).ApplyNameRules();
+            RuleFor(x => x.UniId).ApplyIdRules();
         }
     }
 }

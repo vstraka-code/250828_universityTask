@@ -1,4 +1,5 @@
-﻿using _250828_universityTask.Models;
+﻿using _250828_universityTask.Logger;
+using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -16,12 +17,17 @@ namespace _250828_universityTask.Data
         public List<Student> Students { get; set; }
         public List<University> Universities { get; set; }
 
+        private readonly FileLoggerProvider _fileLoggerProvider;
+        private string mess = "";
+        private LoggerTopics topic = LoggerTopics.JSONDB;
+
         // constructor
-        public JsonDbContext()
+        public JsonDbContext(FileLoggerProvider fileLoggerProvider)
         {
             Students = new List<Student>();
             Professors = new List<Professor>();
             Universities = new List<University>();
+            _fileLoggerProvider = fileLoggerProvider;
             Load();
         }
 
@@ -46,6 +52,9 @@ namespace _250828_universityTask.Data
                     Universities = data.Universities?.Select(MapUniversity).ToList() ?? new();
 
                     MapOtherVariables();
+
+                    mess = "JSON DB File read (converted from JSON into Objects)";
+                    _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
                 }
             }
         }
@@ -87,6 +96,9 @@ namespace _250828_universityTask.Data
             });
 
             File.WriteAllText(_filePath, json);
+
+            mess = "JSON DB File filled with content.";
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
         }
 
         private Student MapStudent(Student s) => new Student

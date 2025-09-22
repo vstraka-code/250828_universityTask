@@ -1,4 +1,5 @@
 ﻿using _250828_universityTask.Data;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 
 namespace _250828_universityTask.Cache
@@ -8,12 +9,16 @@ namespace _250828_universityTask.Cache
         private readonly IJsonDbContext _json;
         private readonly Cache _cache;
         private readonly ILogger<CacheServiceWithoutExtension> _logger;
+        private FileLoggerProvider _fileLoggerProvider;
+        private string mess = "";
+        private LoggerTopics topic = LoggerTopics.Cache;
 
-        public CacheServiceWithoutExtension(IJsonDbContext json, Cache cache, ILogger<CacheServiceWithoutExtension> logger)
+        public CacheServiceWithoutExtension(IJsonDbContext json, Cache cache, ILogger<CacheServiceWithoutExtension> logger, FileLoggerProvider filelogger)
         {
             _json = json;
             _cache = cache;
             _logger = logger;
+            _fileLoggerProvider = filelogger;
         }
 
         public List<Student> AllStudents()
@@ -25,18 +30,22 @@ namespace _250828_universityTask.Cache
 
             if (students.Any())
             {
-                _logger.Log(LogLevel.Information, "Students found in cache.");
+                mess = "Students found in cache.";
+                _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
             }
             else
             {
-                _logger.Log(LogLevel.Information, "Students NOT found in cache.");
+                mess = "Students NOT found in cache.";
+                _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
                 students = _json.Students;
 
                 _cache.SaveCacheStudents(students);
             }
 
-            _logger.Log(LogLevel.Information, "Finished Students");
+            mess = "Finished Students.";
+            //_logger.Log(LogLevel.Information, mess);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return students;
         }
@@ -50,18 +59,21 @@ namespace _250828_universityTask.Cache
 
             if (professors.Any())
             {
-                _logger.Log(LogLevel.Information, "Professors found in cache.");
+                mess = "Professors found in cache.";
+                _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
             }
             else
             {
-                _logger.Log(LogLevel.Information, "Professors NOT found in cache.");
+                mess = "Professors NOT found in cache.";
+                _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
                 professors = _json.Professors;
 
                 _cache.SaveCacheProfessors(professors);
             }
 
-            _logger.Log(LogLevel.Information, "Finished Professor");
+            mess = "Finished Professors.";
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return professors;
         }
@@ -70,7 +82,9 @@ namespace _250828_universityTask.Cache
         {
             _cache.RemoveCacheStudents();
             _cache.RemoveCacheProfessors();
-            _logger.Log(LogLevel.Information, "Cleared cache");
+
+            mess = "Cleared cache.";
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return Results.Ok("Cache cleared");
         }
@@ -78,7 +92,9 @@ namespace _250828_universityTask.Cache
         public IResult ClearStudentsCache()
         {
             _cache.RemoveCacheStudents();
-            _logger.Log(LogLevel.Information, "Cleared Students cache");
+
+            mess = "Cleared Students cache.";
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return Results.Ok("Students Cache cleared");
         }
@@ -86,7 +102,9 @@ namespace _250828_universityTask.Cache
         public IResult ClearProfessorCache()
         {
             _cache.RemoveCacheProfessors();
-            _logger.Log(LogLevel.Information, "Cleared Professor cache");
+
+            mess = "Cleared Professor cache.";
+            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return Results.Ok("Professor Cache cleared");
         }

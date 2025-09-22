@@ -1,0 +1,252 @@
+[ Cache ] 2025-09-22 10:05:10 Professors NOT found in cache.
+[ Cache ] 2025-09-22 10:05:10 Finished Professors.
+[ JWTToken ] 2025-09-22 10:05:10 Token send to the client.
+[ JWTToken ] 2025-09-22 10:05:10 Created Token.
+[ Cache ] 2025-09-22 10:05:19 Professors found in cache.
+[ Cache ] 2025-09-22 10:05:19 Finished Professors.
+[ Cache ] 2025-09-22 10:05:19 Students NOT found in cache.
+[ Cache ] 2025-09-22 10:05:19 Finished Students.
+[ Cache ] 2025-09-22 10:05:21 Professors found in cache.
+[ Cache ] 2025-09-22 10:05:21 Finished Professors.
+[ Cache ] 2025-09-22 10:05:21 Students found in cache.
+[ Cache ] 2025-09-22 10:05:21 Finished Students.
+[ Cache ] 2025-09-22 10:05:21 Professors found in cache.
+[ Cache ] 2025-09-22 10:05:21 Finished Professors.
+[ Cache ] 2025-09-22 10:05:21 Students found in cache.
+[ Cache ] 2025-09-22 10:05:21 Finished Students.
+[ Cache ] 2025-09-22 10:09:39 Professors NOT found in cache.
+[ Cache ] 2025-09-22 10:09:39 Finished Professors.
+[ JWTToken ] 2025-09-22 10:09:39 Created Token.
+[ JWTToken ] 2025-09-22 10:09:39 Token converted to JWT string
+[ JWTToken ] 2025-09-22 10:09:39 Finished Token.
+[ Cache ] 2025-09-22 10:09:49 Professors found in cache.
+[ Cache ] 2025-09-22 10:09:49 Finished Professors.
+[ Cache ] 2025-09-22 10:09:49 Students NOT found in cache.
+[ Cache ] 2025-09-22 10:09:49 Finished Students.
+[ JSONDB ] 2025-09-22 10:29:58 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 10:29:58 Professors NOT found in cache.
+[ JSONDB ] 2025-09-22 10:30:56 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 10:30:56 Professors NOT found in cache.
+[ JSONDB ] 2025-09-22 10:32:06 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 10:32:06 Professors NOT found in cache.
+[ Cache ] 2025-09-22 10:32:06 Professors Cache saved.
+[ Cache ] 2025-09-22 10:32:06 Finished Professors.
+[ JSONDB ] 2025-09-22 10:32:06 JSON DB File filled with content.
+[ Cache ] 2025-09-22 10:32:06 Cleared Professor cache.
+[ JSONDB ] 2025-09-22 10:34:06 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 10:34:06 Professors NOT found in cache.
+[ Cache ] 2025-09-22 10:34:06 Professors Cache saved.
+[ Cache ] 2025-09-22 10:34:06 Finished Professors.
+[ Cache ] 2025-09-22 10:34:16 Professors found in cache.
+[ Cache ] 2025-09-22 10:34:16 Finished Professors.
+[ JSONDB ] 2025-09-22 10:34:16 JSON DB File filled with content.
+[ Cache ] 2025-09-22 10:34:16 Cleared Professor cache.
+[ AuthEndpoints ] 2025-09-22 10:34:16 Registration successful.
+[ Cache ] 2025-09-22 10:34:31 Professors NOT found in cache.
+[ Cache ] 2025-09-22 10:34:31 Professors Cache saved.
+[ Cache ] 2025-09-22 10:34:31 Finished Professors.
+[ JWTToken ] 2025-09-22 10:34:31 Created Token.
+[ JWTToken ] 2025-09-22 10:34:31 Token converted to JWT string.
+[ JWTToken ] 2025-09-22 10:34:31 Finished Token.
+[ AuthEndpoints ] 2025-09-22 10:34:31 Login successful.
+[ Cache ] 2025-09-22 10:34:44 Professors found in cache.
+[ Cache ] 2025-09-22 10:34:44 Finished Professors.
+[ Cache ] 2025-09-22 10:34:44 Students NOT found in cache.
+[ Cache ] 2025-09-22 10:34:44 Students Cache saved.
+[ Cache ] 2025-09-22 10:34:44 Finished Students.
+[ JSONDB ] 2025-09-22 11:39:27 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-22 11:39:27 string with id 0 tried login in with wrong password.
+[ Cache ] 2025-09-22 11:39:27 Professors NOT found in cache.
+[ Cache ] 2025-09-22 11:39:27 Professors Cache saved.
+[ Cache ] 2025-09-22 11:39:27 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 11:39:27 professor with id 6 tried login in with wrong password.
+[ Cache ] 2025-09-22 11:39:27 Professors found in cache.
+[ Cache ] 2025-09-22 11:39:27 Finished Professors.
+[ JWTToken ] 2025-09-22 11:39:27 Created Token.
+[ JWTToken ] 2025-09-22 11:39:27 Token converted to JWT string.
+[ JWTToken ] 2025-09-22 11:39:27 Finished Token for id 6
+[ AuthEndpoints ] 2025-09-22 11:39:27 Login as professor successful with id 6
+[ Cache ] 2025-09-22 11:39:27 Professors found in cache.
+[ Cache ] 2025-09-22 11:39:27 Finished Professors.
+[ Cache ] 2025-09-22 11:39:27 Students NOT found in cache.
+[ Cache ] 2025-09-22 11:39:27 Students Cache saved.
+[ Cache ] 2025-09-22 11:39:27 Finished Students.
+[ StudentEndpoints ] 2025-09-22 11:39:27 Professor with id 6 received all Students
+[ Cache ] 2025-09-22 11:39:27 Students found in cache.
+[ Cache ] 2025-09-22 11:39:27 Finished Students.
+[ Cache ] 2025-09-22 11:39:27 Professors found in cache.
+[ Cache ] 2025-09-22 11:39:27 Finished Professors.
+[ JSONDB ] 2025-09-22 11:39:27 JSON DB File filled with content.
+[ Cache ] 2025-09-22 11:39:27 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-22 11:39:27 Professor with id 6 deleted student with id 7
+[ Cache ] 2025-09-22 11:39:27 Professors found in cache.
+[ Cache ] 2025-09-22 11:39:27 Finished Professors.
+[ Cache ] 2025-09-22 11:39:27 Students NOT found in cache.
+[ Cache ] 2025-09-22 11:39:27 Students Cache saved.
+[ Cache ] 2025-09-22 11:39:27 Finished Students.
+[ JSONDB ] 2025-09-22 11:39:27 JSON DB File filled with content.
+[ Cache ] 2025-09-22 11:39:27 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-22 11:39:27 Professor with id 6 added student with id 10
+[ JSONDB ] 2025-09-22 11:43:35 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 11:43:35 Professors NOT found in cache.
+[ Cache ] 2025-09-22 11:43:35 Professors Cache saved.
+[ Cache ] 2025-09-22 11:43:35 Finished Professors.
+[ JWTToken ] 2025-09-22 11:43:35 Created Token.
+[ JWTToken ] 2025-09-22 11:43:35 Token converted to JWT string.
+[ JWTToken ] 2025-09-22 11:43:35 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-22 11:43:35 Login as professor successful with id 1
+[ JSONDB ] 2025-09-22 11:46:29 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 11:46:29 Professors NOT found in cache.
+[ Cache ] 2025-09-22 11:46:29 Professors Cache saved.
+[ Cache ] 2025-09-22 11:46:29 Finished Professors.
+[ JWTToken ] 2025-09-22 11:46:29 Created Token.
+[ JWTToken ] 2025-09-22 11:46:29 Token converted to JWT string.
+[ JWTToken ] 2025-09-22 11:46:29 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-22 11:46:29 Login as professor successful with id 1
+[ Cache ] 2025-09-22 11:46:29 Students NOT found in cache.
+[ Cache ] 2025-09-22 11:46:29 Students Cache saved.
+[ Cache ] 2025-09-22 11:46:29 Finished Students.
+[ Cache ] 2025-09-22 11:46:29 Students found in cache.
+[ Cache ] 2025-09-22 11:46:29 Finished Students.
+[ JSONDB ] 2025-09-22 11:48:25 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 11:48:25 Professors NOT found in cache.
+[ Cache ] 2025-09-22 11:48:25 Professors Cache saved.
+[ Cache ] 2025-09-22 11:48:25 Finished Professors.
+[ Cache ] 2025-09-22 11:48:25 Students NOT found in cache.
+[ Cache ] 2025-09-22 11:48:25 Students Cache saved.
+[ Cache ] 2025-09-22 11:48:25 Finished Students.
+[ StudentEndpoints ] 2025-09-22 11:48:25 Professor with id 1 received all Students
+[ Cache ] 2025-09-22 11:48:25 Professors found in cache.
+[ Cache ] 2025-09-22 11:48:25 Finished Professors.
+[ Cache ] 2025-09-22 11:48:25 Students found in cache.
+[ Cache ] 2025-09-22 11:48:25 Finished Students.
+[ Exception ] 2025-09-22 11:48:25 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ JSONDB ] 2025-09-22 11:52:49 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 11:52:49 Students NOT found in cache.
+[ Cache ] 2025-09-22 11:52:49 Students Cache saved.
+[ Cache ] 2025-09-22 11:52:49 Finished Students.
+[ Exception ] 2025-09-22 11:52:49 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 12:52:39 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 12:52:39 Professors NOT found in cache.
+[ Cache ] 2025-09-22 12:52:39 Professors Cache saved.
+[ Cache ] 2025-09-22 12:52:39 Finished Professors.
+[ JWTToken ] 2025-09-22 12:52:39 Created Token.
+[ JWTToken ] 2025-09-22 12:52:39 Token converted to JWT string.
+[ JWTToken ] 2025-09-22 12:52:39 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-22 12:52:39 Login as professor successful with id 1
+[ AuthEndpoints ] 2025-09-22 12:52:39 sdf with id 1 tried login in with wrong password.
+[ JSONDB ] 2025-09-22 12:54:44 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-22 12:54:44 sdf with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 12:54:44 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 12:57:00 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-22 12:57:00 Not Existing Role with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 12:57:00 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 12:58:14 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 12:58:14 Professors NOT found in cache.
+[ Cache ] 2025-09-22 12:58:14 Professors Cache saved.
+[ Cache ] 2025-09-22 12:58:14 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 12:58:14 Not Existing Role with id 15 tried login in with wrong password.
+[ Exception ] 2025-09-22 12:58:14 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 13:00:32 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:00:32 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:00:32 Professors Cache saved.
+[ Cache ] 2025-09-22 13:00:32 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:00:32 Not Existing Role with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:00:32 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 13:02:09 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:02:09 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:02:09 Professors Cache saved.
+[ Cache ] 2025-09-22 13:02:09 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:02:09 Not Existing Role with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:02:09 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 13:03:46 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:03:46 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:03:46 Professors Cache saved.
+[ Cache ] 2025-09-22 13:03:46 Finished Professors.
+[ JSONDB ] 2025-09-22 13:05:24 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:05:24 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:05:24 Professors Cache saved.
+[ Cache ] 2025-09-22 13:05:24 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:05:24 professor with id 1 tried login in with wrong password.
+[ JSONDB ] 2025-09-22 13:14:14 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:14:14 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:14:14 Professors Cache saved.
+[ Cache ] 2025-09-22 13:14:14 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:14:14 professor with id 1 tried login in with wrong password.
+[ JSONDB ] 2025-09-22 13:23:49 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:23:49 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:23:49 Professors Cache saved.
+[ Cache ] 2025-09-22 13:23:49 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:23:49 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:23:49 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ AuthEndpoints ] 2025-09-22 13:23:49 Not Existing Role with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:23:49 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ Cache ] 2025-09-22 13:23:49 Professors found in cache.
+[ Cache ] 2025-09-22 13:23:49 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:23:49 professor with id 15 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:23:49 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 13:35:11 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:35:11 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:35:11 Professors Cache saved.
+[ Cache ] 2025-09-22 13:35:11 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:35:11 15not exisiting. Invalid ID.
+[ Exception ] 2025-09-22 13:35:11 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ Cache ] 2025-09-22 13:35:11 Professors found in cache.
+[ Cache ] 2025-09-22 13:35:11 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:35:11 1not exisiting. Invalid ID.
+[ Exception ] 2025-09-22 13:35:11 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ JSONDB ] 2025-09-22 13:37:22 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 13:37:22 Professors NOT found in cache.
+[ Cache ] 2025-09-22 13:37:22 Professors Cache saved.
+[ Cache ] 2025-09-22 13:37:22 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:37:22 ID: 15 not exisiting. Invalid ID.
+[ Exception ] 2025-09-22 13:37:22 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ Cache ] 2025-09-22 13:37:22 Professors found in cache.
+[ Cache ] 2025-09-22 13:37:22 Finished Professors.
+[ AuthEndpoints ] 2025-09-22 13:37:22 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-22 13:37:22 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ AuthEndpoints ] 2025-09-22 13:37:22 Tried login in with undefined role: profssor, with id 1
+[ Exception ] 2025-09-22 13:37:22 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ AuthEndpoints ] 2025-09-22 13:37:22 Tried login in with undefined role: profssor, with id 1
+[ Exception ] 2025-09-22 13:37:22 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: 
+[ Exception ] 2025-09-22 13:37:22 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 13:59:07 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 14:01:04 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 14:04:31 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 14:09:37 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ JSONDB ] 2025-09-22 14:10:49 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-22 14:10:49 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ Exception ] 2025-09-22 14:17:00 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ JSONDB ] 2025-09-22 14:17:00 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-22 14:17:00 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ Exception ] 2025-09-22 14:23:42 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 14:32:41 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ Exception ] 2025-09-22 14:32:41 Status Code: 500, Message: An unexpected error occurred., Errors: 
+[ JSONDB ] 2025-09-22 14:32:41 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-22 14:32:41 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ JSONDB ] 2025-09-22 14:33:41 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-22 14:33:41 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ Exception ] 2025-09-22 14:33:41 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ Exception ] 2025-09-22 14:33:41 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ Exception ] 2025-09-22 14:33:41 Status Code: 400, Message: Validation failed, Errors: System.Collections.Generic.Dictionary`2[System.String,System.String[]]
+[ JSONDB ] 2025-09-22 14:46:41 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-22 14:46:41 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."],"Password":["Password is required."]}
+[ JSONDB ] 2025-09-22 14:50:04 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 14:50:04 Professors NOT found in cache.
+[ Cache ] 2025-09-22 14:50:04 Professors Cache saved.
+[ Cache ] 2025-09-22 14:50:04 Finished Professors.
+[ Exception ] 2025-09-22 14:50:04 Status Code: 400, Message: Validation failed, Errors: {"UniversityId":["There is no university with this name."]}
+[ JSONDB ] 2025-09-22 14:50:48 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 14:50:48 Professors NOT found in cache.
+[ Cache ] 2025-09-22 14:50:48 Professors Cache saved.
+[ Cache ] 2025-09-22 14:50:48 Finished Professors.
+[ Exception ] 2025-09-22 14:50:48 Status Code: 400, Message: Validation failed, Errors: {"UniversityId":["There is no university with this name."]}
+[ Exception ] 2025-09-22 14:53:58 Status Code: 400, Message: Validation failed, Errors: {"Name":["Student name is required."],"UniId":["Id must be bigger than 0."]}
+[ Exception ] 2025-09-22 14:53:58 Status Code: 400, Message: Validation failed, Errors: {"Name":["Student name is required."]}
+[ JSONDB ] 2025-09-22 14:53:58 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-22 14:53:58 Professors NOT found in cache.
+[ Cache ] 2025-09-22 14:53:58 Professors Cache saved.
+[ Cache ] 2025-09-22 14:53:58 Finished Professors.
+[ JSONDB ] 2025-09-22 14:53:58 JSON DB File filled with content.
+[ Cache ] 2025-09-22 14:53:58 Cleared Professor cache.
+[ AuthEndpoints ] 2025-09-22 14:53:58 Registration as professor successful with id 7
