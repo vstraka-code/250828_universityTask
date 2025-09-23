@@ -2,7 +2,7 @@
 
 namespace _250828_universityTask.Helpers
 {
-    public static class ClaimsPrincipalExtensions
+    public static class ClaimsPrincipalExtension
     {
         public static int GetProfessorId(this ClaimsPrincipal user)
         {

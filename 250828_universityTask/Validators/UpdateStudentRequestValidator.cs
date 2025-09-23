@@ -1,4 +1,5 @@
-﻿using _250828_universityTask.Models.Requests;
+﻿using _250828_universityTask.Helpers;
+using _250828_universityTask.Models.Requests;
 using FluentValidation;
 
 namespace _250828_universityTask.Validators
@@ -8,6 +9,7 @@ namespace _250828_universityTask.Validators
         public UpdateStudentRequestValidator()
         {
             RuleFor(x => x.Name).ApplyNameRules();
+
         }
     }
 }

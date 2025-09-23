@@ -11,11 +11,22 @@ namespace _250828_universityTask.Logger
         private readonly string _filePath = @"C:\Users\stv\source\repos\250828_universityTask\250828_universityTask\Logger\logfile.txt";
         private readonly ILogger<FileLoggerProvider> _logger;
         private string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        private readonly bool _disableFileIO;
 
-        public FileLoggerProvider(ILogger<FileLoggerProvider> logger)
+        public FileLoggerProvider(ILogger<FileLoggerProvider> logger, bool disableFileIO = false)
         {
+            if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_TEST") == "true")
+            {
+                disableFileIO = true;
+            }
+
             _logger = logger;
-            Load();
+            _disableFileIO = disableFileIO;
+
+            if (!_disableFileIO)
+            {
+                Load();
+            }
         }
 
         public void Load()
@@ -28,6 +39,8 @@ namespace _250828_universityTask.Logger
 
         public void SaveBehaviourLogging(string message, LoggerTopics topic)
         {
+            if (_disableFileIO) return;
+
             string appendText = "[ " + topic + " ] " + time + " " + message + Environment.NewLine;
 
             _logger.LogInformation(message);
@@ -36,6 +49,8 @@ namespace _250828_universityTask.Logger
 
         public void SaveExceptionLogging(string message)
         {
+            if (_disableFileIO) return;
+
             string appendText = "[ Exception ] " + time + " " + message + Environment.NewLine;
             File.AppendAllText(_filePath, appendText);
         }

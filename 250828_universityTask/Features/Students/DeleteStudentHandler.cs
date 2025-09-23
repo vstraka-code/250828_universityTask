@@ -24,7 +24,7 @@ namespace _250828_universityTask.Features.Students
             // var students = await _cacheService.AllStudents();
             var student = students.FirstOrDefault(p => p.Id == req.StudentId);
 
-            if (student == null) throw new UnauthorizedAccessException();
+            if (student == null) throw new KeyNotFoundException();
 
             // var professors = await _cacheService.AllProfessors();
             var professors = _cacheService.AllProfessors();

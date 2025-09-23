@@ -2,6 +2,7 @@
 using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using _250828_universityTask.Models.Requests;
@@ -28,12 +29,15 @@ namespace _250828_universityTaskTests.Endpoints
     {
         private CacheServiceWithoutExtension _cacheService;
         private IdentityService _identityService;
-        private readonly Cache _cache;
+        private FileLoggerProvider _fileLoggerProvider;
 
         [TestInitialize]
         public void Setup()
         {
-            var jsonDb = new JsonDbContext
+            var _logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(_logger, disableFileIO: true);
+
+            var jsonDb = new JsonDbContext(_fileLoggerProvider)
             {
                 Professors = new List<Professor>
             {
@@ -45,9 +49,10 @@ namespace _250828_universityTaskTests.Endpoints
             }
             };
 
+            var cache = new Cache(_fileLoggerProvider);
             var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
             // var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, cache, logger, _fileLoggerProvider);
             
             var _jwtSettings = new JwtSettings
             {
@@ -57,7 +62,7 @@ namespace _250828_universityTaskTests.Endpoints
                 ExpiryHours = 1
             };
 
-            _identityService = new IdentityService(Options.Create(_jwtSettings));
+            _identityService = new IdentityService(Options.Create(_jwtSettings), _fileLoggerProvider);
         }
 
         [TestMethod]
@@ -67,7 +72,7 @@ namespace _250828_universityTaskTests.Endpoints
             var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "test", "professor");
 
             // Act
-            var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService);
+            var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService, _fileLoggerProvider);
 
             // Assert
             Assert.IsTrue(res.GetType().Name.StartsWith("Ok"));
@@ -79,11 +84,11 @@ namespace _250828_universityTaskTests.Endpoints
             // Arrange
             var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "test", "university");
 
-            // Act
-            var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService);
-
-            // Assert
-            Assert.IsTrue(res.GetType().Name.StartsWith("Unauthorized"));
+            // Act + Assert
+            Assert.ThrowsException<UnauthorizedAccessException>(() =>
+            {
+                AuthEndpoints.LoginLogic(req, _identityService, _cacheService, _fileLoggerProvider);
+            });
         }
 
         [TestMethod]
@@ -92,11 +97,11 @@ namespace _250828_universityTaskTests.Endpoints
             // Arrange
             var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "nothing", "professor");
 
-            // Act
-            var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService);
-
-            // Assert
-            Assert.IsTrue(res.GetType().Name.StartsWith("Unauthorized"));
+            // Act + Assert
+            Assert.ThrowsException<UnauthorizedAccessException>(() =>
+            {
+                AuthEndpoints.LoginLogic(req, _identityService, _cacheService, _fileLoggerProvider);
+            });
         }
 
         [TestMethod]
@@ -105,11 +110,11 @@ namespace _250828_universityTaskTests.Endpoints
             // Arrange
             var req = new _250828_universityTask.Models.Requests.LoginRequest(0, "test", "professor");
 
-            // Act
-            var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService);
-
-            // Assert
-            Assert.IsTrue(res.GetType().Name.StartsWith("Unauthorized"));
+            // Act + Assert
+            Assert.ThrowsException<UnauthorizedAccessException>(() =>
+            {
+                AuthEndpoints.LoginLogic(req, _identityService, _cacheService, _fileLoggerProvider);
+            });
         }
 
         [TestMethod]

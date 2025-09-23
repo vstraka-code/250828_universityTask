@@ -1,10 +1,13 @@
 ﻿using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Features.Students;
+using _250828_universityTask.Helpers;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using System.Collections.Generic;
 
 namespace _250828_universityTaskTests.Features.Students
 {
@@ -14,12 +17,15 @@ namespace _250828_universityTaskTests.Features.Students
         private CancellationToken cancellationToken;
         private CacheServiceWithoutExtension _cacheService;
         private DeleteStudentHandler _handler;
-        private readonly Cache _cache;
+        private FileLoggerProvider _fileLoggerProvider;
 
         [TestInitialize]
         public void Setup()
         {
             cancellationToken = new CancellationToken();
+
+            var _logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(_logger, disableFileIO: true);
 
             var uni1 = new University { Id = 1, Name = "Uni Vie", City = "Vienna", Country = "Austria" };
             var uni2 = new University { Id = 2, Name = "Uni Graz", City = "Graz", Country = "Austria" };
@@ -37,9 +43,10 @@ namespace _250828_universityTaskTests.Features.Students
             };
             jsonDb.When(x => x.Save()).Do(_ => { });
 
+            var cache = new Cache(_fileLoggerProvider);
             var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
             var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, cache, logger, _fileLoggerProvider);
             _handler = new DeleteStudentHandler(jsonDb, _cacheService);
         }
 
@@ -57,16 +64,17 @@ namespace _250828_universityTaskTests.Features.Students
         }
 
         [TestMethod]
-        public async Task Deleting_Not_Exisiting_Student_Should_Return_False()
+        public async Task Deleting_Not_Exisiting_Student_Should_Return_KeyNotFoundException()
         {
             // Arrange
             var req = new DeleteStudentCommand(3, 1);
 
-            // Act
-            var res = await _handler.Handle(req, cancellationToken);
+            // Act + Assert
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(async () =>
+            {
+                await _handler.Handle(req, cancellationToken);
+            });
 
-            // Assert
-            Assert.IsTrue(!res);
         }
 
         [TestMethod]

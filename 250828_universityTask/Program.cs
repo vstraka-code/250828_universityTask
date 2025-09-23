@@ -2,6 +2,7 @@ using _250828_universityTask.Auth;
 using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
+using _250828_universityTask.Helpers;
 using _250828_universityTask.Logger;
 using _250828_universityTask.Middleware;
 using _250828_universityTask.Models.Requests;
@@ -47,6 +48,9 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Services.AddSingleton<FileLoggerProvider>();
 
+// Services
+builder.Services.AddScoped<GenerateIdExtension>();
+
 // configuring Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -90,9 +94,7 @@ var app = builder.Build();
 
 // Register Middleware for Exception Handling, can be useful for readability
 // app.UseGlobalExceptionHandling();
-// app.UseValidationMiddleware();
 
-app.UseMiddleware<ValidationMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();

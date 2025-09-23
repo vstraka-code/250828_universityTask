@@ -2,6 +2,7 @@
 using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
 using _250828_universityTask.Features.Students;
+using _250828_universityTask.Helpers;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
@@ -12,11 +13,13 @@ namespace _250828_universityTask.Features.Professors
     {
         private readonly CacheServiceWithoutExtension _cacheService;
         private readonly IJsonDbContext _json;
+        private readonly GenerateIdExtension _generateIdExtension;
 
-        public AddProfessorHandler(CacheServiceWithoutExtension cacheService, IJsonDbContext json)
+        public AddProfessorHandler(CacheServiceWithoutExtension cacheService, IJsonDbContext json, GenerateIdExtension generateIdExtension)
         {
             _cacheService = cacheService;
             _json = json;
+            _generateIdExtension = generateIdExtension;
         }
 
         public Task<ProfessorDto> Handle(AddProfessorCommand req, CancellationToken cancellationToken)
@@ -33,7 +36,8 @@ namespace _250828_universityTask.Features.Professors
                 });
             }
 
-            var id = (_json.Professors.Any() ? _json.Professors.Max(s => s.Id) : 0) + 1;
+            // var id = (_json.Professors.Any() ? _json.Professors.Max(s => s.Id) : 0) + 1;
+            var id = _generateIdExtension.GenerateIdProfessor();
 
             var professor = new Professor
             {

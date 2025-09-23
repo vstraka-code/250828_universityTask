@@ -2,6 +2,8 @@
 using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
 using _250828_universityTask.Features.Students;
+using _250828_universityTask.Helpers;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -15,12 +17,16 @@ namespace _250828_universityTaskTests.Features.Students
         private CancellationToken cancellationToken;
         private CacheServiceWithoutExtension _cacheService;
         private AddStudentHandler _handler;
-        private readonly Cache _cache;
+        private FileLoggerProvider _fileLoggerProvider;
+        private GenerateIdExtension _generateIdExtension;
 
         [TestInitialize]
         public void Setup()
         {
             cancellationToken = new CancellationToken();
+
+            var _logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(_logger, disableFileIO: true);
 
             var uni1 = new University { Id = 1, Name = "Uni Vie", City = "Vienna", Country = "Austria" };
             var uni2 = new University { Id = 2, Name = "Uni Graz", City = "Graz", Country = "Austria" };
@@ -38,10 +44,14 @@ namespace _250828_universityTaskTests.Features.Students
             };
             jsonDb.When(x => x.Save()).Do(_ => { });
 
+            var cache = new Cache(_fileLoggerProvider);
             var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
             var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
-            _handler = new AddStudentHandler(_cacheService, jsonDb);
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, cache, logger, _fileLoggerProvider);
+
+            _generateIdExtension = new GenerateIdExtension(_cacheService, _fileLoggerProvider);
+
+            _handler = new AddStudentHandler(_cacheService, jsonDb, _generateIdExtension);
         }
 
         [TestMethod]

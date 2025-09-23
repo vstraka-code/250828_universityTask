@@ -55,6 +55,11 @@ namespace _250828_universityTask.Middleware
                 await WriteJsonResponse(context, StatusCodes.Status404NotFound, knfex.Message ?? "Resource not found", _fileLoggerProvider);
                 _logger.LogWarning("Resource not found: {Message}", knfex.Message);
             }
+            catch (InvalidOperationException ioex)
+            {
+                await WriteJsonResponse(context, StatusCodes.Status400BadRequest, ioex.Message ?? "Invalid operation occurred", _fileLoggerProvider);
+                _logger.LogWarning("Invalid operation: {Message}", ioex.Message);
+            }
             catch (ArgumentNullException anex)
             {
                 await WriteJsonResponse(context, StatusCodes.Status400BadRequest, anex.Message ?? "Value cannot be null.", _fileLoggerProvider);

@@ -68,40 +68,17 @@ namespace _250828_universityTask.Auth
                     options.Events = new JwtBearerEvents
                     {
                         // Auth fails
-                        OnChallenge = async context =>
+                        OnChallenge = context =>
                         {
                             // prevents default behaviour because we want to write our own response body
                             context.HandleResponse();
 
-                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                            context.Response.ContentType = "application/json";
-
-                            var payload = new ErrorResponse( // status - message - error
-                                StatusCodes.Status401Unauthorized,
-                                "Authentication failed",
-                                new Dictionary<string, string[]>
-                                {
-                                    // new string[]
-                                    { "Token", new[] { "Invalid or missing token." } }
-                                });
-
-                            await context.Response.WriteAsJsonAsync(payload);
+                            throw new UnauthorizedAccessException("Invalid or missing token.");
                         },
                         // Auth done - permission failed
-                        OnForbidden = async context =>
+                        OnForbidden = context =>
                         {
-                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                            context.Response.ContentType = "application/json";
-
-                            var payload = new ErrorResponse(
-                                StatusCodes.Status401Unauthorized,
-                                "Forbidden",
-                                new Dictionary<string, string[]>
-                                {
-                                    { "Token", new[] { "You don't have permission to perform this action." } }
-                                });
-
-                                await context.Response.WriteAsJsonAsync(payload);
+                            throw new UnauthorizedAccessException("You don't have permission to perform this action.");
                         }
                     };
                 });

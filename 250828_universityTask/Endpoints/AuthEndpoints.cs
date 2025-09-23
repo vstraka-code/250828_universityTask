@@ -35,47 +35,63 @@ namespace _250828_universityTask.Endpoints
         {
             var authGroup = app.MapGroup("/api/auth");
 
-            authGroup.MapPost("/login", (LoginRequest req, IValidator<LoginRequest> validator, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider) =>
+            authGroup.MapPost("/login", (HttpContext context, /* LoginRequest req,*/ IValidator<LoginRequest> validator, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider) =>
             {
-                var validationResult = validator.Validate(req);
-                if (!validationResult.IsValid)
-                {
-                    var errors = validationResult.Errors
-                        .GroupBy(e => e.PropertyName)
-                        .ToDictionary(
-                            g => g.Key,
-                            g => g.Select(e => e.ErrorMessage).ToArray()
-                        );
+                context.Request.Headers.TryGetValue("USER-ID", out var idHeader);
+                context.Request.Headers.TryGetValue("USER-PASSWORD", out var passwordHeader);
+                context.Request.Headers.TryGetValue("USER-ROLE", out var roleHeader);
 
-                    throw new Exceptions.ValidationException(errors);
-                }
+                int? id = int.TryParse(idHeader, out var parsedId) ? parsedId : null;
 
+                var req = new LoginRequest(
+                    Id: id,
+                    Password: passwordHeader.ToString(),
+                    Role: roleHeader.ToString()
+                );
+
+                ValidatorExtensions.ValidateResult(req, validator);
                 return LoginLogic(req, identityService, cacheService, fileLoggerProvider);
             });
 
-            authGroup.MapPost("/register", (RegistrationRequest req, IValidator<RegistrationRequest> validator, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
+            authGroup.MapPost("/register", (HttpContext context, /* RegistrationRequest req, */ IValidator<RegistrationRequest> validator, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                var validationResult = validator.Validate(req);
-                if (!validationResult.IsValid)
-                {
-                    var errors = validationResult.Errors
-                        .GroupBy(e => e.PropertyName)
-                        .ToDictionary(
-                            g => g.Key,
-                            g => g.Select(e => e.ErrorMessage).ToArray()
-                        );
+                context.Request.Headers.TryGetValue("PROF-NAME", out var nameHeader);
+                context.Request.Headers.TryGetValue("UNI-ID", out var uniIdHeader);
 
-                    throw new Exceptions.ValidationException(errors);
-                }
+                int? uniId = int.TryParse(uniIdHeader, out var parsedId) ? parsedId : null;
 
+                var req = new RegistrationRequest(
+                    Name: nameHeader.ToString(),
+                    UniId: uniId
+                );
+
+                ValidatorExtensions.ValidateResult(req, validator);
                 return RegisterLogic(req, mediator, fileLoggerProvider);
             });
         }
 
-        public static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider)
+        internal static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider)
         {
 
-            if (req.Id is null)
+            /* 
+                cases
+                0 as ID: No ID provided in login request
+
+                first if : Tried login in with undefined role:
+                invalid role + invalid password + invalid id
+                invalid role + invalid password + id
+                invalid role + password + invalid id
+                invalid role + password + id
+
+                second if : ID: " + req.Id + " not exisiting. Invalid ID
+                role + password + invalid id
+                role + invalid password + invalid id
+
+                third if: with id " + req.Id + " tried login in with wrong password
+                role + invalid password + id 
+            */
+
+            if (req.Id is null || req.Id == 0) // mainly so I can use req.Id.Value without issues
             {
                 mess = "No ID provided in login request.";
                 fileLoggerProvider.SaveBehaviourLogging(mess, topic);
@@ -85,29 +101,25 @@ namespace _250828_universityTask.Endpoints
             var role = req.Role;
             var (uniId, verified) = VerifyPassword(req.Password, req.Id.Value, role, cacheService);
 
-            if (!exisiting)
+            if (role != ProfessorRole && role != StudentRole)
+            {
+                mess = "Tried login in with undefined role: " + role + ", with id " + req.Id;
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                throw new UnauthorizedAccessException();
+            } else if (!exisiting)
             {
                 mess = "ID: " + req.Id + " not exisiting. Invalid ID.";
                 fileLoggerProvider.SaveBehaviourLogging(mess, topic);
-
                 throw new UnauthorizedAccessException();
-
-            } else if (!verified)
+            }
+            else if (!verified)
             {
-                if (role != ProfessorRole && role != StudentRole)
-                {
-                    mess = "Tried login in with undefined role: " + role + ", with id " + req.Id;
-                    fileLoggerProvider.SaveBehaviourLogging(mess, topic);
-                } else
-                {
-                    mess = role + " with id " + req.Id + " tried login in with wrong password.";
-                    fileLoggerProvider.SaveBehaviourLogging(mess, topic);
-                }
-
+                mess = role + " with id " + req.Id + " tried login in with wrong password.";
+                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
                 throw new UnauthorizedAccessException();
             }
             
-            if (role == ProfessorRole || role == StudentRole)
+            if (role == ProfessorRole || role == StudentRole && verified && exisiting)
             {
                 var token = identityService.CreateToken(req.Id.Value, role, uniId);
 
@@ -120,9 +132,9 @@ namespace _250828_universityTask.Endpoints
             throw new UnauthorizedAccessException();
         }
 
-        public static async Task<IResult> RegisterLogic(RegistrationRequest req, IMediator mediator, FileLoggerProvider fileLoggerProvider)
+        private static async Task<IResult> RegisterLogic(RegistrationRequest req, IMediator mediator, FileLoggerProvider fileLoggerProvider)
         {
-            if (req.UniId is null)
+            if (req.UniId is null) // mainly so I can use req.UniId.Value without issues
             {
                 mess = "No Uni ID provided in registration request.";
                 fileLoggerProvider.SaveBehaviourLogging(mess, topic);

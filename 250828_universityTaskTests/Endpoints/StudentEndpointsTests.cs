@@ -4,6 +4,7 @@ using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using _250828_universityTask.Models.Requests;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using System;
@@ -29,10 +31,15 @@ namespace _250828_universityTaskTests.Endpoints
     public class StudentEndpointsTests
     {
         private ServiceCollection _services;
+        private FileLoggerProvider _fileLoggerProvider;
+
 
         [TestInitialize]
         public void Setup()
         {
+            var logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(logger, disableFileIO: true);
+
             _services = new ServiceCollection();
             _services.AddLogging();
         }
@@ -55,7 +62,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.AddStudentLogic(req, user, mediator);
+            var res = await StudentEndpoints.AddStudentLogic(req, user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert
@@ -81,7 +88,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.DeleteStudentLogic(id, user, mediator);
+            var res = await StudentEndpoints.DeleteStudentLogic(id, user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert
@@ -109,7 +116,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.UpdateStudentLogic(id, req, user, mediator);
+            var res = await StudentEndpoints.UpdateStudentLogic(id, req, user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert
@@ -136,7 +143,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.GetAllStudentsLogic(user, mediator);
+            var res = await StudentEndpoints.GetAllStudentsLogic(user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert
@@ -162,7 +169,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.GetStudentLogic(id, user, mediator);
+            var res = await StudentEndpoints.GetStudentLogic(id, user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert
@@ -185,7 +192,7 @@ namespace _250828_universityTaskTests.Endpoints
             httpContext.RequestServices = _services.BuildServiceProvider();
 
             // Act
-            var res = await StudentEndpoints.GetStudentAsStudentLogic(user, mediator);
+            var res = await StudentEndpoints.GetStudentAsStudentLogic(user, mediator, _fileLoggerProvider);
             await res.ExecuteAsync(httpContext);
 
             // Assert

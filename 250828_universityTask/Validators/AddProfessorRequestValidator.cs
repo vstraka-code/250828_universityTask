@@ -4,11 +4,12 @@ using FluentValidation;
 
 namespace _250828_universityTask.Validators
 {
-    public class AddStudentRequestValidator : AbstractValidator<AddStudentRequest>
+    public class AddProfessorRequestValidator : AbstractValidator<RegistrationRequest>
     {
-        public AddStudentRequestValidator()
+        public AddProfessorRequestValidator()
         {
             RuleFor(x => x.Name).ApplyNameRules();
+            RuleFor(x => x.UniId).ApplyIdRules();
         }
     }
 }

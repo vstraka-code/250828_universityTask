@@ -1,18 +1,6 @@
 {
   "Students": [
     {
-      "Id": 1,
-      "Name": "Tom Sawyer",
-      "UniversityId": 1,
-      "ProfessorAddedId": 2
-    },
-    {
-      "Id": 5,
-      "Name": "Klaus Thomas",
-      "UniversityId": 1,
-      "ProfessorAddedId": 4
-    },
-    {
       "Id": 8,
       "Name": "Florian",
       "UniversityId": 2,
@@ -26,9 +14,27 @@
     },
     {
       "Id": 10,
-      "Name": "Rudolph Hollunder",
+      "Name": "Drache Kokosnuss",
       "UniversityId": 1,
       "ProfessorAddedId": 6
+    },
+    {
+      "Id": 11,
+      "Name": "Otto Thomas",
+      "UniversityId": 2,
+      "ProfessorAddedId": 1
+    },
+    {
+      "Id": 3,
+      "Name": "Maria Hilgard III",
+      "UniversityId": 2,
+      "ProfessorAddedId": 1
+    },
+    {
+      "Id": 1,
+      "Name": "Clara Red",
+      "UniversityId": 1,
+      "ProfessorAddedId": 2
     }
   ],
   "Professors": [
@@ -65,6 +71,16 @@
     {
       "Id": 7,
       "Name": "Klaus Haul",
+      "UniversityId": 1
+    },
+    {
+      "Id": 8,
+      "Name": "Bernhard Steineder",
+      "UniversityId": 2
+    },
+    {
+      "Id": 9,
+      "Name": "Julia Zagreb",
       "UniversityId": 1
     }
   ],

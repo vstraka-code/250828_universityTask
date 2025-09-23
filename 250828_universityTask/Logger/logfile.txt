@@ -250,3 +250,361 @@
 [ JSONDB ] 2025-09-22 14:53:58 JSON DB File filled with content.
 [ Cache ] 2025-09-22 14:53:58 Cleared Professor cache.
 [ AuthEndpoints ] 2025-09-22 14:53:58 Registration as professor successful with id 7
+[ JSONDB ] 2025-09-23 08:46:25 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 08:46:25 Professors NOT found in cache.
+[ Cache ] 2025-09-23 08:46:25 Professors Cache saved.
+[ Cache ] 2025-09-23 08:46:25 Finished Professors.
+[ JWTToken ] 2025-09-23 08:46:25 Created Token.
+[ JWTToken ] 2025-09-23 08:46:25 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 08:46:25 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-23 08:46:25 Login as professor successful with id 1
+[ Cache ] 2025-09-23 08:46:25 Professors found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Professors.
+[ Cache ] 2025-09-23 08:46:25 Students NOT found in cache.
+[ Cache ] 2025-09-23 08:46:25 Students Cache saved.
+[ Cache ] 2025-09-23 08:46:25 Finished Students.
+[ StudentEndpoints ] 2025-09-23 08:46:25 Professor with id 1 received all Students
+[ Cache ] 2025-09-23 08:46:25 Professors found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Professors.
+[ Cache ] 2025-09-23 08:46:25 Students found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Students.
+[ JSONDB ] 2025-09-23 08:46:25 JSON DB File filled with content.
+[ Cache ] 2025-09-23 08:46:25 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 08:46:25 Professor with id 1 added student with id 11
+[ Cache ] 2025-09-23 08:46:25 Professors found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Professors.
+[ Cache ] 2025-09-23 08:46:25 Students NOT found in cache.
+[ Cache ] 2025-09-23 08:46:25 Students Cache saved.
+[ Cache ] 2025-09-23 08:46:25 Finished Students.
+[ Exception ] 2025-09-23 08:46:25 Status Code: 404, Message: The given key was not present in the dictionary., Errors: null
+[ Cache ] 2025-09-23 08:46:25 Professors found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Professors.
+[ Cache ] 2025-09-23 08:46:25 Students found in cache.
+[ Cache ] 2025-09-23 08:46:25 Finished Students.
+[ JSONDB ] 2025-09-23 08:46:25 JSON DB File filled with content.
+[ Cache ] 2025-09-23 08:46:25 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 08:46:25 Professor with id 1 updated student with id 11
+[ JSONDB ] 2025-09-23 09:11:41 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 09:11:41 ID: 0 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:11:41 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:11:41 ID: 0 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:11:41 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:11:41 ID: 0 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:11:41 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 09:13:10 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 09:13:10 ID: 0 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:13:10 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:13:10 ID: 1 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:13:10 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:13:10 ID: 2 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:13:10 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 09:38:26 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 09:38:26 Tried login in with undefined role: string, with id 0
+[ Exception ] 2025-09-23 09:38:26 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 09:39:51 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 09:39:51 No ID provided in login request.
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:39:51 Tried login in with undefined role: string, with id 45
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:39:51 Tried login in with undefined role: string, with id 1
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:39:51 Tried login in with undefined role: string, with id 45
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:39:51 Tried login in with undefined role: string, with id 1
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 09:39:51 Professors NOT found in cache.
+[ Cache ] 2025-09-23 09:39:51 Professors Cache saved.
+[ Cache ] 2025-09-23 09:39:51 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 09:39:51 ID: 45 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 09:39:51 Professors found in cache.
+[ Cache ] 2025-09-23 09:39:51 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 09:39:51 ID: 45 not exisiting. Invalid ID.
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 09:39:51 Professors found in cache.
+[ Cache ] 2025-09-23 09:39:51 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 09:39:51 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-23 09:39:51 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 09:49:44 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 09:49:44 No ID provided in login request.
+[ Exception ] 2025-09-23 09:49:44 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 09:49:44 Tried login in with undefined role: string, with id 1
+[ Exception ] 2025-09-23 09:49:44 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 10:14:04 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 10:14:04 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."]}
+[ AuthEndpoints ] 2025-09-23 10:14:04 Tried login in with undefined role: string, with id 45
+[ Exception ] 2025-09-23 10:14:04 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 10:14:04 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must have a value.","Id must have a value."]}
+[ AuthEndpoints ] 2025-09-23 10:14:04 Tried login in with undefined role: string, with id 1
+[ Exception ] 2025-09-23 10:14:04 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ AuthEndpoints ] 2025-09-23 10:14:04 Tried login in with undefined role: string, with id 45
+[ Exception ] 2025-09-23 10:14:04 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 10:17:57 Status Code: 400, Message: Validation failed, Errors: {"UniId":["Id must be bigger than 0."]}
+[ Exception ] 2025-09-23 10:17:57 Status Code: 400, Message: Validation failed, Errors: {"UniId":["Id must have a value.","Id must have a value."]}
+[ JSONDB ] 2025-09-23 10:20:07 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 10:20:07 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."]}
+[ JSONDB ] 2025-09-23 10:20:57 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 10:20:57 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."]}
+[ JSONDB ] 2025-09-23 11:25:15 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 11:25:15 Professors NOT found in cache.
+[ Cache ] 2025-09-23 11:25:15 Professors Cache saved.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ JWTToken ] 2025-09-23 11:25:15 Created Token.
+[ JWTToken ] 2025-09-23 11:25:15 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 11:25:15 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 11:25:15 Login as professor successful with id 2
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students NOT found in cache.
+[ Cache ] 2025-09-23 11:25:15 Students Cache saved.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 2 received all Students
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ GenerateID ] 2025-09-23 11:25:15 Available ID: 2
+[ JSONDB ] 2025-09-23 11:25:15 JSON DB File filled with content.
+[ Cache ] 2025-09-23 11:25:15 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 2 added student with id 2
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students NOT found in cache.
+[ Cache ] 2025-09-23 11:25:15 Students Cache saved.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 2 received all Students
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ JWTToken ] 2025-09-23 11:25:15 Created Token.
+[ JWTToken ] 2025-09-23 11:25:15 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 11:25:15 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-23 11:25:15 Login as professor successful with id 1
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 1 received all Students
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ GenerateID ] 2025-09-23 11:25:15 Available ID: 3
+[ JSONDB ] 2025-09-23 11:25:15 JSON DB File filled with content.
+[ Cache ] 2025-09-23 11:25:15 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 1 added student with id 3
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students NOT found in cache.
+[ Cache ] 2025-09-23 11:25:15 Students Cache saved.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 1 received all Students
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ JWTToken ] 2025-09-23 11:25:15 Created Token.
+[ JWTToken ] 2025-09-23 11:25:15 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 11:25:15 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 11:25:15 Login as professor successful with id 2
+[ Cache ] 2025-09-23 11:25:15 Professors found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Professors.
+[ Cache ] 2025-09-23 11:25:15 Students found in cache.
+[ Cache ] 2025-09-23 11:25:15 Finished Students.
+[ StudentEndpoints ] 2025-09-23 11:25:15 Professor with id 2 received all Students
+[ JSONDB ] 2025-09-23 11:28:12 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 11:28:12 Professors NOT found in cache.
+[ Cache ] 2025-09-23 11:28:12 Professors Cache saved.
+[ Cache ] 2025-09-23 11:28:12 Finished Professors.
+[ Cache ] 2025-09-23 11:28:12 Professors found in cache.
+[ Cache ] 2025-09-23 11:28:12 Finished Professors.
+[ GenerateID ] 2025-09-23 11:28:12 Available ID: 8
+[ JSONDB ] 2025-09-23 11:28:12 JSON DB File filled with content.
+[ Cache ] 2025-09-23 11:28:12 Cleared Professor cache.
+[ AuthEndpoints ] 2025-09-23 11:28:12 Registration as professor successful with id 8
+[ Exception ] 2025-09-23 11:50:49 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 11:51:40 Status Code: 403, Message: Failed, Errors: null
+[ JSONDB ] 2025-09-23 13:19:26 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 13:19:26 Professors NOT found in cache.
+[ Cache ] 2025-09-23 13:19:26 Professors Cache saved.
+[ Cache ] 2025-09-23 13:19:26 Finished Professors.
+[ JWTToken ] 2025-09-23 13:19:26 Created Token.
+[ JWTToken ] 2025-09-23 13:19:26 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 13:19:26 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-23 13:19:26 Login as professor successful with id 1
+[ JSONDB ] 2025-09-23 13:29:34 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 13:29:34 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must have a value.","Id must have a value."],"Password":["Password is required."],"Role":["Role is required."]}
+[ JSONDB ] 2025-09-23 13:32:13 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 13:32:13 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must have a value.","Id must have a value."],"Password":["Password is required."],"Role":["Role is required."]}
+[ Exception ] 2025-09-23 13:32:13 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must have a value.","Id must have a value."],"Password":["Password is required."],"Role":["Role is required."]}
+[ JSONDB ] 2025-09-23 13:32:42 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 13:32:42 No ID provided in login request.
+[ Exception ] 2025-09-23 13:32:42 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 13:35:05 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 13:35:05 No ID provided in login request.
+[ Exception ] 2025-09-23 13:35:05 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 13:37:40 JSON DB File read (converted from JSON into Objects)
+[ AuthEndpoints ] 2025-09-23 13:37:40 No ID provided in login request.
+[ Exception ] 2025-09-23 13:37:40 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 13:38:16 JSON DB File read (converted from JSON into Objects)
+[ JSONDB ] 2025-09-23 13:39:55 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 13:39:55 Professors NOT found in cache.
+[ Cache ] 2025-09-23 13:39:55 Professors Cache saved.
+[ Cache ] 2025-09-23 13:39:55 Finished Professors.
+[ JWTToken ] 2025-09-23 13:39:55 Created Token.
+[ JWTToken ] 2025-09-23 13:39:55 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 13:39:55 Finished Token for id 1
+[ AuthEndpoints ] 2025-09-23 13:39:55 Login as professor successful with id 1
+[ Cache ] 2025-09-23 13:39:55 Professors found in cache.
+[ Cache ] 2025-09-23 13:39:55 Finished Professors.
+[ Cache ] 2025-09-23 13:39:55 Students NOT found in cache.
+[ Cache ] 2025-09-23 13:39:55 Students Cache saved.
+[ Cache ] 2025-09-23 13:39:55 Finished Students.
+[ StudentEndpoints ] 2025-09-23 13:39:55 Professor with id 1 received all Students
+[ Cache ] 2025-09-23 13:39:55 Professors found in cache.
+[ Cache ] 2025-09-23 13:39:55 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 13:39:55 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-23 13:39:55 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 13:39:55 Professors found in cache.
+[ Cache ] 2025-09-23 13:39:55 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 13:39:55 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-23 13:39:55 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 13:39:55 Professors found in cache.
+[ Cache ] 2025-09-23 13:39:55 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 13:39:55 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-23 13:39:55 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ JSONDB ] 2025-09-23 13:42:39 JSON DB File read (converted from JSON into Objects)
+[ Exception ] 2025-09-23 13:42:39 Status Code: 400, Message: Validation failed, Errors: {"Password":["Password is required."]}
+[ Exception ] 2025-09-23 13:42:39 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."]}
+[ Exception ] 2025-09-23 13:42:39 Status Code: 400, Message: Validation failed, Errors: {"Id":["Id must be bigger than 0."]}
+[ Cache ] 2025-09-23 13:42:39 Professors NOT found in cache.
+[ Cache ] 2025-09-23 13:42:39 Professors Cache saved.
+[ Cache ] 2025-09-23 13:42:39 Finished Professors.
+[ AuthEndpoints ] 2025-09-23 13:42:39 professor with id 1 tried login in with wrong password.
+[ Exception ] 2025-09-23 13:42:39 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 13:42:39 Professors found in cache.
+[ Cache ] 2025-09-23 13:42:39 Finished Professors.
+[ JWTToken ] 2025-09-23 13:42:39 Created Token.
+[ JWTToken ] 2025-09-23 13:42:39 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 13:42:39 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 13:42:39 Login as professor successful with id 2
+[ Cache ] 2025-09-23 13:42:39 Students NOT found in cache.
+[ Cache ] 2025-09-23 13:42:39 Students Cache saved.
+[ Cache ] 2025-09-23 13:42:39 Finished Students.
+[ JWTToken ] 2025-09-23 13:42:39 Created Token.
+[ JWTToken ] 2025-09-23 13:42:39 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 13:42:39 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 13:42:39 Login as student successful with id 2
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 14:16:44 Professors NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Professors Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ JWTToken ] 2025-09-23 14:16:44 Created Token.
+[ JWTToken ] 2025-09-23 14:16:44 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 14:16:44 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 14:16:44 Login as professor successful with id 2
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Students Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 received all Students
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ JWTToken ] 2025-09-23 14:16:44 Created Token.
+[ JWTToken ] 2025-09-23 14:16:44 Token converted to JWT string.
+[ JWTToken ] 2025-09-23 14:16:44 Finished Token for id 2
+[ AuthEndpoints ] 2025-09-23 14:16:44 Login as student successful with id 2
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Student itself received Studeninformation as Student with id 2
+[ Exception ] 2025-09-23 14:16:44 Status Code: 403, Message: You don't have permission to perform this action., Errors: null
+[ Exception ] 2025-09-23 14:16:44 Status Code: 403, Message: You don't have permission to perform this action., Errors: null
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 deleted student with id 2
+[ Cache ] 2025-09-23 14:16:44 Students NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Students Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 deleted student with id 1
+[ Cache ] 2025-09-23 14:16:44 Students NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Students Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Exception ] 2025-09-23 14:16:44 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 deleted student with id 5
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Students Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 received all Students
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 received all Students
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 updated student with id 10
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students NOT found in cache.
+[ Cache ] 2025-09-23 14:16:44 Students Cache saved.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Exception ] 2025-09-23 14:16:44 Status Code: 400, Message: Validation failed, Errors: {"Name":["A student with this name already exists in the university."]}
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ Cache ] 2025-09-23 14:16:44 Students found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Students.
+[ GenerateID ] 2025-09-23 14:16:44 Available ID: 1
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Students cache.
+[ StudentEndpoints ] 2025-09-23 14:16:44 Professor with id 2 added student with id 1
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ Cache ] 2025-09-23 14:16:44 Professors found in cache.
+[ Cache ] 2025-09-23 14:16:44 Finished Professors.
+[ GenerateID ] 2025-09-23 14:16:44 Available ID: 9
+[ JSONDB ] 2025-09-23 14:16:44 JSON DB File filled with content.
+[ Cache ] 2025-09-23 14:16:44 Cleared Professor cache.
+[ AuthEndpoints ] 2025-09-23 14:16:44 Registration as professor successful with id 9
+[ Exception ] 2025-09-23 14:16:44 Status Code: 400, Message: Validation failed, Errors: {"Name":["Name is required."],"UniId":["Id must have a value.","Id must have a value."]}
+[ Exception ] 2025-09-23 14:16:44 Status Code: 400, Message: Validation failed, Errors: {"Name":["Name is required."],"UniId":["Id must have a value.","Id must have a value."]}
+[ JSONDB ] 2025-09-23 14:50:37 JSON DB File read (converted from JSON into Objects)
+[ JSONDB ] 2025-09-23 14:51:24 JSON DB File read (converted from JSON into Objects)
+[ JSONDB ] 2025-09-23 14:51:36 JSON DB File read (converted from JSON into Objects)
+[ JSONDB ] 2025-09-23 14:54:47 JSON DB File read (converted from JSON into Objects)
+[ Cache ] 2025-09-23 14:54:47 Professors NOT found in cache.
+[ Cache ] 2025-09-23 14:54:47 Professors Cache saved.
+[ Cache ] 2025-09-23 14:54:47 Finished Professors.
+[ Exception ] 2025-09-23 15:15:41 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 15:18:55 Status Code: 400, Message: Value cannot be null., Errors: null
+[ Exception ] 2025-09-23 15:18:59 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 15:23:33 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 15:25:30 Status Code: 400, Message: Value cannot be null., Errors: null
+[ Exception ] 2025-09-23 15:25:30 Status Code: 403, Message: Attempted to perform an unauthorized operation., Errors: null
+[ Exception ] 2025-09-23 15:25:51 Status Code: 400, Message: Value cannot be null., Errors: null
+[ Exception ] 2025-09-23 15:26:03 Status Code: 400, Message: Value cannot be null., Errors: null

@@ -5,10 +5,12 @@ using _250828_universityTask.Helpers;
 using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Requests;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 
@@ -44,16 +46,30 @@ namespace _250828_universityTask.Endpoints
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "student" });
 
             // Prof can add new student
-            studentsGroup.MapPost("", async (AddStudentRequest req, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
+            studentsGroup.MapPost("", async (HttpContext context, /* AddStudentRequest req, */ IValidator <AddStudentRequest> validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
+                context.Request.Headers.TryGetValue("NAME", out var nameHeader);
+
+                var req = new AddStudentRequest(
+                    Name: nameHeader.ToString()
+                );
+
+                ValidatorExtensions.ValidateResult(req, validator);
                 return await AddStudentLogic(req, user, mediator, fileLoggerProvider);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 
             // prof can edit student
-            studentsGroup.MapPut("/{id:int}", async (int id, UpdateStudentRequest request, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
+            studentsGroup.MapPut("/{id:int}", async (int id, HttpContext context, /* UpdateStudentRequest req, */ IValidator < UpdateStudentRequest > validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                return await UpdateStudentLogic(id, request, user, mediator, fileLoggerProvider);
+                context.Request.Headers.TryGetValue("NAME", out var nameHeader);
+
+                var req = new UpdateStudentRequest(
+                    Name: nameHeader.ToString()
+                );
+
+                ValidatorExtensions.ValidateResult(req, validator);
+                return await UpdateStudentLogic(id, req, user, mediator, fileLoggerProvider);
             })
                 .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
 

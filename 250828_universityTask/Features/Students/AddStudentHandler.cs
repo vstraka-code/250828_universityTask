@@ -1,6 +1,7 @@
 ﻿using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
+using _250828_universityTask.Helpers;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
@@ -13,13 +14,15 @@ namespace _250828_universityTask.Features.Students
         // private readonly AppDbContext _db;
         private readonly CacheServiceWithoutExtension _cacheService;
         private readonly IJsonDbContext _json;
+        private readonly GenerateIdExtension _generateIdExtension;
 
         // constructor for AddStudentHandler => receives AppDbContext as parameter (db) from Dependency Injection (DI)
-        public AddStudentHandler(CacheServiceWithoutExtension cacheService, IJsonDbContext json)
+        public AddStudentHandler(CacheServiceWithoutExtension cacheService, IJsonDbContext json, GenerateIdExtension generateIdExtension)
         {
             // _db = db;
             _cacheService = cacheService;
             _json = json;
+            _generateIdExtension = generateIdExtension;
         }
 
         // CancellationToken is a signal => stop querying the database if the token is triggered
@@ -45,7 +48,8 @@ namespace _250828_universityTask.Features.Students
             }
 
             // checks are there any students and finds the max + 1
-            var id = (_json.Students.Any() ? _json.Students.Max(s => s.Id) : 0) + 1;
+            // var id = (_json.Students.Any() ? _json.Students.Max(s => s.Id) : 0) + 1;
+            var id = _generateIdExtension.GenerateIdStudent();
 
             var student = new Student
             {

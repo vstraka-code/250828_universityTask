@@ -1,6 +1,7 @@
 ﻿using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Features.Students;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -15,14 +16,18 @@ namespace _250828_universityTaskTests.Features.Students
         private CancellationToken cancellationToken;
         private CacheServiceWithoutExtension _cacheService;
         private GetStudentHandler _handler;
-        private readonly Cache _cache;
+        private FileLoggerProvider _fileLoggerProvider;
 
         [TestInitialize]
         public void Setup()
         {
             cancellationToken = new CancellationToken();
 
-            var jsonDb = new JsonDbContext
+            var _logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(_logger, disableFileIO: true);
+
+
+            var jsonDb = new JsonDbContext(_fileLoggerProvider)
             {
                 Professors = new List<Professor>
             {
@@ -35,9 +40,10 @@ namespace _250828_universityTaskTests.Features.Students
             }
             };
 
+            var cache = new Cache(_fileLoggerProvider);
             var logger = Substitute.For<ILogger<CacheServiceWithoutExtension>>();
             var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cacheService = new CacheServiceWithoutExtension(jsonDb, _cache, logger);
+            _cacheService = new CacheServiceWithoutExtension(jsonDb, cache, logger, _fileLoggerProvider);
             _handler = new GetStudentHandler(_cacheService);
         }
 

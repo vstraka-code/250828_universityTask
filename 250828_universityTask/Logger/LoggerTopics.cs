@@ -8,6 +8,7 @@
         JSONDB,
         AuthEndpoints,
         StudentEndpoints,
+        GenerateID,
         Unknown
     }
 }

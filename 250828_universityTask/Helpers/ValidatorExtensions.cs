@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
-namespace _250828_universityTask.Validators
+namespace _250828_universityTask.Helpers
 {
     public static class ValidatorExtensions
     {
@@ -33,6 +33,22 @@ namespace _250828_universityTask.Validators
             return rule
                 .NotEmpty().WithMessage("Role is required.")
                 .MaximumLength(30).WithMessage("Student name must not exceed 30 characters.");
+        }
+
+        public static void ValidateResult<T>(T req, IValidator<T> validator)
+        {
+            var validationResult = validator.Validate(req);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    );
+
+                throw new Exceptions.ValidationException(errors);
+            }
         }
     }
 }

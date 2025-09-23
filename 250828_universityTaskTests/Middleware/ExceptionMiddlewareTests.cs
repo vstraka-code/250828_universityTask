@@ -1,4 +1,5 @@
 ﻿using _250828_universityTask.Cache;
+using _250828_universityTask.Logger;
 using _250828_universityTask.Middleware;
 using _250828_universityTask.Models.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,14 @@ namespace _250828_universityTaskTests.Middleware
     public class ExceptionMiddlewareTests
     {
         private ILogger<ExceptionMiddleware> _logger;
+        private FileLoggerProvider _fileLoggerProvider;
 
         [TestInitialize]
         public void Setup()
         {
+            var logger = Substitute.For<ILogger<FileLoggerProvider>>();
+            _fileLoggerProvider = new FileLoggerProvider(logger, disableFileIO: true);
+
             _logger = Substitute.For<ILogger<ExceptionMiddleware>>();
         }
 
@@ -34,7 +39,7 @@ namespace _250828_universityTaskTests.Middleware
                 throw exception;
             }
 
-            var middleware = new ExceptionMiddleware(next, _logger);
+            var middleware = new ExceptionMiddleware(next, _logger, _fileLoggerProvider);
             var httpContext = new DefaultHttpContext();
 
             // Act
@@ -58,7 +63,7 @@ namespace _250828_universityTaskTests.Middleware
                 throw exception;
             }
 
-            var middleware = new ExceptionMiddleware(next, _logger);
+            var middleware = new ExceptionMiddleware(next, _logger, _fileLoggerProvider);
             var httpContext = new DefaultHttpContext();
 
             // Act
@@ -80,7 +85,7 @@ namespace _250828_universityTaskTests.Middleware
                 throw exception;
             }
 
-            var middleware = new ExceptionMiddleware(next, _logger);
+            var middleware = new ExceptionMiddleware(next, _logger, _fileLoggerProvider);
             var httpContext = new DefaultHttpContext();
             httpContext.Response.Body = new MemoryStream();
 
