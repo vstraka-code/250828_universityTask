@@ -37,34 +37,14 @@ namespace _250828_universityTask.Endpoints
 
             authGroup.MapPost("/login", (HttpContext context, /* LoginRequest req,*/ IValidator<LoginRequest> validator, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider) =>
             {
-                context.Request.Headers.TryGetValue("USER-ID", out var idHeader);
-                context.Request.Headers.TryGetValue("USER-PASSWORD", out var passwordHeader);
-                context.Request.Headers.TryGetValue("USER-ROLE", out var roleHeader);
-
-                int? id = int.TryParse(idHeader, out var parsedId) ? parsedId : null;
-
-                var req = new LoginRequest(
-                    Id: id,
-                    Password: passwordHeader.ToString(),
-                    Role: roleHeader.ToString()
-                );
-
+                var req = GetHeaderValueExtension.GetHeaderValueLogin(context);
                 ValidatorExtensions.ValidateResult(req, validator);
                 return LoginLogic(req, identityService, cacheService, fileLoggerProvider);
             });
 
             authGroup.MapPost("/register", (HttpContext context, /* RegistrationRequest req, */ IValidator<RegistrationRequest> validator, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                context.Request.Headers.TryGetValue("PROF-NAME", out var nameHeader);
-                context.Request.Headers.TryGetValue("UNI-ID", out var uniIdHeader);
-
-                int? uniId = int.TryParse(uniIdHeader, out var parsedId) ? parsedId : null;
-
-                var req = new RegistrationRequest(
-                    Name: nameHeader.ToString(),
-                    UniId: uniId
-                );
-
+                var req = GetHeaderValueExtension.GetHeaderValueRegister(context);
                 ValidatorExtensions.ValidateResult(req, validator);
                 return RegisterLogic(req, mediator, fileLoggerProvider);
             });

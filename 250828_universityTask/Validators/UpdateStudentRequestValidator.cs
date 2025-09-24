@@ -9,7 +9,6 @@ namespace _250828_universityTask.Validators
         public UpdateStudentRequestValidator()
         {
             RuleFor(x => x.Name).ApplyNameRules();
-
         }
     }
 }

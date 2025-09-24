@@ -59,6 +59,7 @@ namespace _250828_universityTask.Data
             }
         }
 
+        // virtual = can be overridden
         public virtual void Save()
         {
             var data = new
@@ -75,6 +76,7 @@ namespace _250828_universityTask.Data
                 Professors = Professors.Select(p => new ProfessorRecord
                 (
                     p.Id,
+                    p.Email,
                     p.Name,
                     p.UniversityId
                 )).ToList(),
@@ -112,6 +114,7 @@ namespace _250828_universityTask.Data
         private Professor MapProfessor(Professor p) => new Professor
         {
             Id = p.Id,
+            Email = p.Email,
             Name = p.Name,
             UniversityId = p.UniversityId
         };

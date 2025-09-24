@@ -11,6 +11,8 @@ namespace _250828_universityTask.Validators
             RuleFor(x => x.Id).ApplyIdRules();
             RuleFor(x => x.Password).ApplyPasswordRules();
             RuleFor(x => x.Role).ApplyRoleRules();
+            RuleFor(x => x.Email).EmailAddress();
+            RuleFor(x => x.Email).ApplEmailRules();
         }
     }
 }

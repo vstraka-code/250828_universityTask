@@ -4,6 +4,7 @@
     public record ProfessorRecord
     (
         int Id,
+        string Email,
         string Name,
         int UniversityId
     );

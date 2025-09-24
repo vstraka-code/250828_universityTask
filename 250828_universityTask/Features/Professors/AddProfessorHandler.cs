@@ -42,6 +42,7 @@ namespace _250828_universityTask.Features.Professors
             var professor = new Professor
             {
                 Id = id,
+                Email = "example@example.com",
                 Name = req.Name,
                 UniversityId = req.UniId,
             };
@@ -64,6 +65,7 @@ namespace _250828_universityTask.Features.Professors
             return Task.FromResult(
                 new ProfessorDto(
                 professor.Id,
+                professor.Email,
                 professor.Name,
                 university.Name ?? "Unkown"
                 )

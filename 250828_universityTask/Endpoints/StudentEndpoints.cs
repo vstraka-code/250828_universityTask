@@ -20,6 +20,8 @@ namespace _250828_universityTask.Endpoints
     {
         private static string mess = "";
         private static LoggerTopics topic = LoggerTopics.StudentEndpoints;
+        private const string ProfessorRole = "professor";
+        private const string StudentRole = "student";
         public static void MapStudentEndpoints(this WebApplication app)
         {
             var studentsGroup = app.MapGroup("/api/students");
@@ -29,63 +31,53 @@ namespace _250828_universityTask.Endpoints
             {
                 return await GetAllStudentsLogic(user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
 
             // get specific Student with the id
             studentsGroup.MapGet("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await GetStudentLogic(id, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
 
             // get info about yourself as student
             studentsGroup.MapGet("/me", async (ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await GetStudentAsStudentLogic(user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "student" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = StudentRole });
 
             // Prof can add new student
             studentsGroup.MapPost("", async (HttpContext context, /* AddStudentRequest req, */ IValidator <AddStudentRequest> validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                context.Request.Headers.TryGetValue("NAME", out var nameHeader);
-
-                var req = new AddStudentRequest(
-                    Name: nameHeader.ToString()
-                );
-
+                var req = GetHeaderValueExtension.GetHeaderValueAdd(context);
                 ValidatorExtensions.ValidateResult(req, validator);
                 return await AddStudentLogic(req, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
 
             // prof can edit student
             studentsGroup.MapPut("/{id:int}", async (int id, HttpContext context, /* UpdateStudentRequest req, */ IValidator < UpdateStudentRequest > validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
-                context.Request.Headers.TryGetValue("NAME", out var nameHeader);
-
-                var req = new UpdateStudentRequest(
-                    Name: nameHeader.ToString()
-                );
-
+                var req = GetHeaderValueExtension.GetHeaderValueUpdate(context);
                 ValidatorExtensions.ValidateResult(req, validator);
                 return await UpdateStudentLogic(id, req, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
 
             // prof can delete student
             studentsGroup.MapDelete("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await DeleteStudentLogic(id, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor" });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
 
             // prof can clear cache
             studentsGroup.MapPost("/clear-cache", (CacheServiceWithoutExtension _cacheService) =>
             {
                 return _cacheService.ClearCache();
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = "professor"});
+                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
         }
 
         public static async Task<IResult> AddStudentLogic(AddStudentRequest req, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider)

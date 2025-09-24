@@ -35,6 +35,13 @@ namespace _250828_universityTask.Helpers
                 .MaximumLength(30).WithMessage("Student name must not exceed 30 characters.");
         }
 
+        public static IRuleBuilderOptions<T, string> ApplEmailRules<T>(this IRuleBuilder<T, string> rule)
+        {
+            return rule
+                .NotEmpty().WithMessage("E-Mail is required.")
+                .MaximumLength(100).WithMessage("E-Mail must not exceed 100 characters. ");
+        }
+
         public static void ValidateResult<T>(T req, IValidator<T> validator)
         {
             var validationResult = validator.Validate(req);

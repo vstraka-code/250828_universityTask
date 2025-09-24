@@ -69,7 +69,7 @@ namespace _250828_universityTaskTests.Endpoints
         public void Trying_Login_Should_Return_200()
         {
             // Arrange
-            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "test", "professor");
+            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "e@e.com", "test", "professor");
 
             // Act
             var res = AuthEndpoints.LoginLogic(req, _identityService, _cacheService, _fileLoggerProvider);
@@ -82,7 +82,7 @@ namespace _250828_universityTaskTests.Endpoints
         public void Trying_Login_Wrong_Role_Should_Return_Unauthorized()
         {
             // Arrange
-            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "test", "university");
+            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "e@e.com", "test", "university");
 
             // Act + Assert
             Assert.ThrowsException<UnauthorizedAccessException>(() =>
@@ -95,7 +95,7 @@ namespace _250828_universityTaskTests.Endpoints
         public void Trying_Login_Wrong_Password_Should_Return_Unauthorized()
         {
             // Arrange
-            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "nothing", "professor");
+            var req = new _250828_universityTask.Models.Requests.LoginRequest(1, "e@e.com", "nothing", "professor");
 
             // Act + Assert
             Assert.ThrowsException<UnauthorizedAccessException>(() =>
@@ -108,7 +108,7 @@ namespace _250828_universityTaskTests.Endpoints
         public void Trying_Login_No_User_With_Id_Should_Return_Unauthorized()
         {
             // Arrange
-            var req = new _250828_universityTask.Models.Requests.LoginRequest(0, "test", "professor");
+            var req = new _250828_universityTask.Models.Requests.LoginRequest(0, "e@e.com", "test", "professor");
 
             // Act + Assert
             Assert.ThrowsException<UnauthorizedAccessException>(() =>
