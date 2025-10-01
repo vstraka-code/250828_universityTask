@@ -6,7 +6,7 @@
         public string Name { get; set; } = null!;
 
 
-        // Optional foreign key to University
+        // foreign key to University
         public int? UniversityId { get; set; }
         public University? University { get; set; }
 

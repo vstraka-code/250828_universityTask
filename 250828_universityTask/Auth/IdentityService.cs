@@ -10,8 +10,8 @@ namespace _250828_universityTask.Auth
     // JWT Token creation
     public class IdentityService
     {
-        private const string ProfessorRole = "professor";
-        private const string StudentRole = "student";
+        private const string PROFESSOR = "professor";
+        private const string STUDENT = "student";
 
         private readonly JwtSettings? _settings;
         private readonly byte[] _key; //signing key as raw bytes
@@ -79,12 +79,12 @@ namespace _250828_universityTask.Auth
                         new Claim(JwtRegisteredClaimNames.Sub, id.ToString()), //subject
                         new Claim(ClaimTypes.Role, role),
                     };
-            if (role == ProfessorRole)
+            if (role == PROFESSOR)
             {
                 claims.Add(new("ProfessorId", id.ToString()));
                 claims.Add(new("UniversityId", uniId?.ToString() ?? "")); // if id !null convert to string, otherwise empty string
             }
-            else if (role == StudentRole)
+            else if (role == STUDENT)
             {
                 claims.Add(new("StudentId", id.ToString()));
             }

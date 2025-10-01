@@ -1,9 +1,5 @@
-﻿using _250828_universityTask.Exceptions;
-using _250828_universityTask.Logger;
+﻿using _250828_universityTask.Logger;
 using _250828_universityTask.Models.Dtos;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 // 400 Bad Request  => ValidationException
@@ -76,13 +72,14 @@ namespace _250828_universityTask.Middleware
         {
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
+            errors = JsonSerializer.Serialize(errors);
 
             var payload = new ErrorResponse(
                                 statusCode,
                                 message,
-                                JsonSerializer.Serialize(errors));
+                                errors);
 
-            string mess = "Status Code: " + statusCode.ToString() + ", Message: " + message + ", Errors: " + JsonSerializer.Serialize(errors);
+            string mess = "Status Code: " + statusCode.ToString() + ", Message: " + message + ", Errors: " + errors;
             fileLoggerProvider.SaveExceptionLogging(mess);
 
             await context.Response.WriteAsJsonAsync(payload);

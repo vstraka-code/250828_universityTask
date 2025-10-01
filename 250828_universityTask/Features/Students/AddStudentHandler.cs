@@ -5,7 +5,6 @@ using _250828_universityTask.Helpers;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace _250828_universityTask.Features.Students
 {

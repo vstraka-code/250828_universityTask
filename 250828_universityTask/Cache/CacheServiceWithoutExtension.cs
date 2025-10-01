@@ -23,8 +23,10 @@ namespace _250828_universityTask.Cache
 
         public List<Student> AllStudents()
         {
-            List<Student> students;
-            students = new List<Student>();
+            // List<Student> students;
+            // students = new List<Student>();
+
+            var students = new List<Student>();
 
             students = _cache.GetCacheStudents();
 
@@ -44,7 +46,6 @@ namespace _250828_universityTask.Cache
             }
 
             mess = "Finished Students.";
-            //_logger.Log(LogLevel.Information, mess);
             _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
 
             return students;

@@ -1,7 +1,6 @@
 ﻿using _250828_universityTask.Cache;
 using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
-using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
 using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;

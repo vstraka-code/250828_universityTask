@@ -1,32 +1,21 @@
 ﻿using _250828_universityTask.Auth;
 using _250828_universityTask.Cache;
-using _250828_universityTask.Data;
 using _250828_universityTask.Features.Professors;
-using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
 using _250828_universityTask.Logger;
 using _250828_universityTask.Models.Dtos;
 using _250828_universityTask.Models.Requests;
-using _250828_universityTask.Validators;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
 using System.Runtime.CompilerServices;
-using System.Security.Claims;
-using System.Security.Cryptography;
 
 [assembly: InternalsVisibleTo("250828_universityTaskTests")]
 namespace _250828_universityTask.Endpoints
 {
     public static class AuthEndpoints
     {
-        private const string ProfessorRole = "professor";
-        private const string StudentRole = "student";
+        private const string PROFESSOR = "professor";
+        private const string STUDENT = "student";
         private static Boolean exisiting = false;
 
         private static string mess = "";
@@ -81,7 +70,7 @@ namespace _250828_universityTask.Endpoints
             var role = req.Role;
             var (uniId, verified) = VerifyPassword(req.Password, req.Id.Value, role, cacheService);
 
-            if (role != ProfessorRole && role != StudentRole)
+            if (role != PROFESSOR && role != STUDENT)
             {
                 mess = "Tried login in with undefined role: " + role + ", with id " + req.Id;
                 fileLoggerProvider.SaveBehaviourLogging(mess, topic);
@@ -99,7 +88,7 @@ namespace _250828_universityTask.Endpoints
                 throw new UnauthorizedAccessException();
             }
             
-            if (role == ProfessorRole || role == StudentRole && verified && exisiting)
+            if (role == PROFESSOR || role == STUDENT && verified && exisiting)
             {
                 var token = identityService.CreateToken(req.Id.Value, role, uniId);
 
@@ -134,7 +123,7 @@ namespace _250828_universityTask.Endpoints
 
         internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheServiceWithoutExtension cacheService)
         {
-            if (role == ProfessorRole)
+            if (role == PROFESSOR)
             {
                 var professors = cacheService.AllProfessors();
                 // var professors = await cacheService.AllProfessors();
@@ -148,7 +137,7 @@ namespace _250828_universityTask.Endpoints
                 {
                     return (prof.UniversityId, true);
                 }
-            } else if (role == StudentRole)
+            } else if (role == STUDENT)
             {
                 var students = cacheService.AllStudents();
                 // var students = await cacheService.AllStudents();

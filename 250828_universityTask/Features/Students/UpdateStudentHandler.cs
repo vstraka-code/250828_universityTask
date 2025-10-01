@@ -3,7 +3,6 @@ using _250828_universityTask.Data;
 using _250828_universityTask.Exceptions;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace _250828_universityTask.Features.Students

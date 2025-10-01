@@ -4,23 +4,9 @@ using _250828_universityTask.Data;
 using _250828_universityTask.Endpoints;
 using _250828_universityTask.Logger;
 using _250828_universityTask.Models;
-using _250828_universityTask.Models.Dtos;
-using _250828_universityTask.Models.Requests;
-using Azure.Core;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using NSubstitute;
-using System.Data;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Security.Claims;
 
 namespace _250828_universityTaskTests.Endpoints
 {

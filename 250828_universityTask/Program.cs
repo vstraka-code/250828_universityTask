@@ -42,6 +42,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegistrationRequest>();
 // builder.Services.AddMemoryCache();
 // builder.Services.AddScoped<CacheService>();
 builder.Services.AddSingleton<Cache>();
+// AddScoped<T>() => One instance per HTTP request
 builder.Services.AddScoped<CacheServiceWithoutExtension>();
 
 builder.Logging.ClearProviders();

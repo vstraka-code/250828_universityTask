@@ -1,17 +1,11 @@
 ﻿using _250828_universityTask.Cache;
-using _250828_universityTask.Data;
 using _250828_universityTask.Features.Students;
 using _250828_universityTask.Helpers;
 using _250828_universityTask.Logger;
-using _250828_universityTask.Models;
 using _250828_universityTask.Models.Requests;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 
 namespace _250828_universityTask.Endpoints
@@ -20,8 +14,8 @@ namespace _250828_universityTask.Endpoints
     {
         private static string mess = "";
         private static LoggerTopics topic = LoggerTopics.StudentEndpoints;
-        private const string ProfessorRole = "professor";
-        private const string StudentRole = "student";
+        private const string PROFESSOR = "professor";
+        private const string STUDENT = "student";
         public static void MapStudentEndpoints(this WebApplication app)
         {
             var studentsGroup = app.MapGroup("/api/students");
@@ -31,21 +25,21 @@ namespace _250828_universityTask.Endpoints
             {
                 return await GetAllStudentsLogic(user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
 
             // get specific Student with the id
             studentsGroup.MapGet("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await GetStudentLogic(id, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
 
             // get info about yourself as student
             studentsGroup.MapGet("/me", async (ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await GetStudentAsStudentLogic(user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = StudentRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = STUDENT });
 
             // Prof can add new student
             studentsGroup.MapPost("", async (HttpContext context, /* AddStudentRequest req, */ IValidator <AddStudentRequest> validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
@@ -54,7 +48,7 @@ namespace _250828_universityTask.Endpoints
                 ValidatorExtensions.ValidateResult(req, validator);
                 return await AddStudentLogic(req, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
 
             // prof can edit student
             studentsGroup.MapPut("/{id:int}", async (int id, HttpContext context, /* UpdateStudentRequest req, */ IValidator < UpdateStudentRequest > validator, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
@@ -63,21 +57,21 @@ namespace _250828_universityTask.Endpoints
                 ValidatorExtensions.ValidateResult(req, validator);
                 return await UpdateStudentLogic(id, req, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
 
             // prof can delete student
             studentsGroup.MapDelete("/{id:int}", async (int id, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider) =>
             {
                 return await DeleteStudentLogic(id, user, mediator, fileLoggerProvider);
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
 
             // prof can clear cache
             studentsGroup.MapPost("/clear-cache", (CacheServiceWithoutExtension _cacheService) =>
             {
                 return _cacheService.ClearCache();
             })
-                .RequireAuthorization(new AuthorizeAttribute { Roles = ProfessorRole });
+                .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
         }
 
         public static async Task<IResult> AddStudentLogic(AddStudentRequest req, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider)

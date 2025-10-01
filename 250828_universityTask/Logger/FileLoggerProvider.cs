@@ -1,9 +1,4 @@
-﻿using _250828_universityTask.Cache;
-using _250828_universityTask.Models;
-using _250828_universityTask.Models.Dtos;
-using System.IO;
-using System.Text.Json;
-
+﻿
 namespace _250828_universityTask.Logger
 {
     public class FileLoggerProvider
@@ -52,6 +47,7 @@ namespace _250828_universityTask.Logger
             if (_disableFileIO) return;
 
             string appendText = "[ Exception ] " + time + " " + message + Environment.NewLine;
+
             File.AppendAllText(_filePath, appendText);
         }
     }

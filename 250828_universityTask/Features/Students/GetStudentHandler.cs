@@ -1,10 +1,6 @@
 ﻿using _250828_universityTask.Cache;
-using _250828_universityTask.Data;
-using _250828_universityTask.Models;
 using _250828_universityTask.Models.Dtos;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace _250828_universityTask.Features.Students
 {

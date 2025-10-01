@@ -40,7 +40,7 @@ namespace _250828_universityTask.Helpers
             var students = _cacheService.AllStudents();
 
             IdsStudents = students
-                .Select(p => p.Id)
+                .Select(s => s.Id)
                 .ToList();
 
             return FindMissingNumber(IdsStudents);

@@ -48,6 +48,7 @@ namespace _250828_universityTask.Helpers
             if (!validationResult.IsValid)
             {
                 var errors = validationResult.Errors
+                    // grouped them by which property failed
                     .GroupBy(e => e.PropertyName)
                     .ToDictionary(
                         g => g.Key,
