@@ -9,14 +9,18 @@ namespace _250828_universityTask.Helpers
 {
     public class GenerateIdExtension
     {
-        private readonly CacheServiceWithoutExtension _cacheService;
-
-        private readonly FileLoggerProvider _fileLoggerProvider;
+        #region Properties
         private static string mess = "";
-        private static LoggerTopics topic = LoggerTopics.GenerateID;
+
         public List<int> IdsProfessors { get; set; }
         public List<int> IdsStudents { get; set; }
 
+        [Inject] private static LoggerTopics _topic = LoggerTopics.GenerateID;
+        [Inject] private readonly CacheServiceWithoutExtension _cacheService;
+        [Inject] private readonly FileLoggerProvider _fileLoggerProvider;
+        #endregion
+
+        #region Constructor
         public GenerateIdExtension(CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider)
         {
             _cacheService = cacheService;
@@ -24,6 +28,9 @@ namespace _250828_universityTask.Helpers
             IdsProfessors = new List<int>();
             IdsStudents = new List<int>();
         }
+        #endregion
+
+        #region GenerateId
         public int GenerateIdProfessor()
         {
             var professors = _cacheService.AllProfessors();
@@ -45,6 +52,7 @@ namespace _250828_universityTask.Helpers
 
             return FindMissingNumber(IdsStudents);
         }
+        #endregion
 
         private int FindMissingNumber(List<int> ids)
         {
@@ -75,12 +83,12 @@ namespace _250828_universityTask.Helpers
             if (ids.Contains(id))
             {
                 mess = "Something went wrong generating an Id.";
-                _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new ArgumentNullException();
             }
 
             mess = "Available ID: " + id;
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return id;
         }

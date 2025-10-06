@@ -12,12 +12,15 @@ namespace _250828_universityTask.Middleware
 {
     public class ExceptionMiddleware
     {
+        #region Properties
         // Represents next middleware in ASP.NET Core pipeline => _next(context) passes req down the chain => stores next middleware in pipeline
-        private readonly RequestDelegate _next;
+        [Inject] private readonly RequestDelegate _next;
         // Used to log exceptions or errors that occur during req processing, stores logger for logging errors
-        private readonly ILogger<ExceptionMiddleware> _logger;
-        private readonly FileLoggerProvider _fileLoggerProvider;
+        [Inject] private readonly ILogger<ExceptionMiddleware> _logger;
+        [Inject] private readonly FileLoggerProvider _fileLoggerProvider;
+        #endregion
 
+        #region Constructor
         // constructor injection => You don’t have to manually create _next or _logger => framework does it for you
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, FileLoggerProvider fileLoggerProvider)
         {
@@ -25,6 +28,7 @@ namespace _250828_universityTask.Middleware
             _logger = logger;
             _fileLoggerProvider = fileLoggerProvider;
         }
+        #endregion
 
         // Tries to execute next middleware in Pipeline => req will continue to other middleware
         // If any exception occurs Downstream => will be caught by this middleware

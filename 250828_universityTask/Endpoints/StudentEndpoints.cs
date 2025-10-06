@@ -12,10 +12,15 @@ namespace _250828_universityTask.Endpoints
 {
     public static class StudentEndpoints
     {
+        #region Properties
         private static string mess = "";
-        private static LoggerTopics topic = LoggerTopics.StudentEndpoints;
+
         private const string PROFESSOR = "professor";
         private const string STUDENT = "student";
+
+        [Inject] private static LoggerTopics _topic = LoggerTopics.StudentEndpoints;
+        #endregion
+
         public static void MapStudentEndpoints(this WebApplication app)
         {
             var studentsGroup = app.MapGroup("/api/students");
@@ -74,13 +79,14 @@ namespace _250828_universityTask.Endpoints
                 .RequireAuthorization(new AuthorizeAttribute { Roles = PROFESSOR });
         }
 
+        #region Logic
         public static async Task<IResult> AddStudentLogic(AddStudentRequest req, ClaimsPrincipal user, IMediator mediator, FileLoggerProvider fileLoggerProvider)
         {
             var professorId = user.GetProfessorId();
             var student = await mediator.Send(new AddStudentCommand(req.Name, professorId));
 
             mess = "Professor with id " + professorId + " added student with id " + student.Id;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Created($"/api/students/{student.Id}", student);
         }
@@ -92,7 +98,7 @@ namespace _250828_universityTask.Endpoints
             if (!deleted) return Results.NotFound();
 
             mess = "Professor with id " + professorId + " deleted student with id " + id;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.NoContent();
         }
@@ -103,7 +109,7 @@ namespace _250828_universityTask.Endpoints
             var student = await mediator.Send(new UpdateStudentCommand(id, request.Name, professorId));
 
             mess = "Professor with id " + professorId + " updated student with id " + id;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Ok(student);
         }
@@ -114,7 +120,7 @@ namespace _250828_universityTask.Endpoints
             var students = await mediator.Send(new GetAllStudentsQuery(professorId));
 
             mess = "Professor with id " + professorId + " received all Students";
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Ok(students);
         }
@@ -125,7 +131,7 @@ namespace _250828_universityTask.Endpoints
             var student = await mediator.Send(new GetStudentQuery(id, professorId));
 
             mess = "Professor with id " + professorId + " received Student with id " + id;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Ok(student);
         }
@@ -136,9 +142,10 @@ namespace _250828_universityTask.Endpoints
             var student = await mediator.Send(new GetStudentQuery(studentId, null, studentId));
 
             mess = "Student itself received Studeninformation as Student with id " + studentId;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Ok(student);
         }
+        #endregion
     }
 }

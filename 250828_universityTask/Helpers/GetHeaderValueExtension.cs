@@ -51,6 +51,7 @@ namespace _250828_universityTask.Helpers
             return req;
         }
 
+        #region HelperMethods
         public static string GetHeaderValue(HttpContext context, string headerValue)
         {
             context.Request.Headers.TryGetValue(headerValue, out var value);
@@ -87,5 +88,6 @@ namespace _250828_universityTask.Helpers
             int? id = int.TryParse(unparsedId, out var parsedId) ? parsedId : null;
             return id;
         }
+        #endregion
     }
 }

@@ -5,24 +5,34 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+// 1. create ClaimsIdentity in authendpoints
+// 2. CreateSecurityToken
+// 3. which calls GetTokenDescriptor
+// 4. WriteToken
+
+// identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));
+
 namespace _250828_universityTask.Auth
 {
     // JWT Token creation
     public class IdentityService
     {
+        #region Properties
         private const string PROFESSOR = "professor";
         private const string STUDENT = "student";
 
-        private readonly JwtSettings? _settings;
-        private readonly byte[] _key; //signing key as raw bytes
-
-        // factory for creating + writing tokens (from Microsoft)
-        private readonly JwtSecurityTokenHandler _tokenHandler = new();
-
-        private readonly FileLoggerProvider _fileLoggerProvider;
         private string mess = "";
-        private LoggerTopics topic = LoggerTopics.JWTToken;
 
+        private readonly byte[] _key; //signing key as raw bytes
+        [Inject] private readonly JwtSettings? _settings;
+        // factory for creating + writing tokens (from Microsoft)
+        [Inject] private readonly JwtSecurityTokenHandler _tokenHandler = new();
+
+        [Inject] private readonly FileLoggerProvider _fileLoggerProvider;
+        [Inject] private LoggerTopics _topic = LoggerTopics.JWTToken;
+        #endregion 
+
+        #region Constructors
         // Constructor
         public IdentityService(IOptions<JwtSettings> jwtSettings, FileLoggerProvider fileLoggerProvider)
         {
@@ -36,7 +46,9 @@ namespace _250828_universityTask.Auth
             _key = Encoding.ASCII.GetBytes(_settings.Key);
             _fileLoggerProvider = fileLoggerProvider;
         }
+        #endregion 
 
+        #region Methods
         // builds blueprint of token - just token object
         // ClaimsIdentity = built-in .NET class representing user identity + claims (from authendpoints)
         public SecurityToken CreateSecurityToken(ClaimsIdentity identity)
@@ -49,7 +61,7 @@ namespace _250828_universityTask.Auth
         public string WriteToken(SecurityToken token)
         {
             mess = "Token converted to JWT string.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return _tokenHandler.WriteToken(token);
         }
@@ -58,7 +70,7 @@ namespace _250828_universityTask.Auth
         private SecurityTokenDescriptor GetTokenDescriptor(ClaimsIdentity identity)
         {
             mess = "Created Token.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return new SecurityTokenDescriptor()
             {
@@ -92,16 +104,10 @@ namespace _250828_universityTask.Auth
             var token = WriteToken(CreateSecurityToken(new ClaimsIdentity(claims)));
 
             mess = "Finished Token for id " + id;
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return token;
         }
+        #endregion
     }
 }
-
-// 1. create ClaimsIdentity in authendpoints
-// 2.CreateSecurityToken
-// 3.which calls GetTokenDescriptor
-// 4. WriteToken
-
-// identityService.WriteToken(identityService.CreateSecurityToken(new ClaimsIdentity(claims)));

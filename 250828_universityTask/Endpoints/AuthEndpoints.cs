@@ -14,12 +14,15 @@ namespace _250828_universityTask.Endpoints
 {
     public static class AuthEndpoints
     {
+        #region Properties
+        private static Boolean exisiting = false;
+        private static string mess = "";
+        [Inject] private static LoggerTopics _topic = LoggerTopics.AuthEndpoints;
+
         private const string PROFESSOR = "professor";
         private const string STUDENT = "student";
-        private static Boolean exisiting = false;
+        #endregion
 
-        private static string mess = "";
-        private static LoggerTopics topic = LoggerTopics.AuthEndpoints;
         public static void MapAuthEndpoints(this WebApplication app)
         {
             var authGroup = app.MapGroup("/api/auth");
@@ -39,6 +42,7 @@ namespace _250828_universityTask.Endpoints
             });
         }
 
+        #region Logic
         internal static IResult LoginLogic(LoginRequest req, IdentityService identityService, CacheServiceWithoutExtension cacheService, FileLoggerProvider fileLoggerProvider)
         {
 
@@ -63,7 +67,7 @@ namespace _250828_universityTask.Endpoints
             if (req.Id is null || req.Id == 0) // mainly so I can use req.Id.Value without issues
             {
                 mess = "No ID provided in login request.";
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new UnauthorizedAccessException();
             }
 
@@ -73,18 +77,18 @@ namespace _250828_universityTask.Endpoints
             if (role != PROFESSOR && role != STUDENT)
             {
                 mess = "Tried login in with undefined role: " + role + ", with id " + req.Id;
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new UnauthorizedAccessException();
             } else if (!exisiting)
             {
                 mess = "ID: " + req.Id + " not exisiting. Invalid ID.";
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new UnauthorizedAccessException();
             }
             else if (!verified)
             {
                 mess = role + " with id " + req.Id + " tried login in with wrong password.";
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new UnauthorizedAccessException();
             }
             
@@ -93,7 +97,7 @@ namespace _250828_universityTask.Endpoints
                 var token = identityService.CreateToken(req.Id.Value, role, uniId);
 
                 mess = "Login as " + role + " successful with id " + req.Id;
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
                 return Results.Ok(new AuthResponse(token));
             }
@@ -106,7 +110,7 @@ namespace _250828_universityTask.Endpoints
             if (req.UniId is null) // mainly so I can use req.UniId.Value without issues
             {
                 mess = "No Uni ID provided in registration request.";
-                fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 throw new UnauthorizedAccessException();
             }
 
@@ -116,10 +120,11 @@ namespace _250828_universityTask.Endpoints
             var professor = await mediator.Send(new AddProfessorCommand(professorName, professorUniId));
 
             mess = "Registration as professor successful with id " + professor.Id;
-            fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
 
             return Results.Created($"/api/auth/register/{professor.Id}", professor);
         }
+        #endregion
 
         internal static (int? uniId, bool verified) VerifyPassword(string password, int id, string role, CacheServiceWithoutExtension cacheService)
         {

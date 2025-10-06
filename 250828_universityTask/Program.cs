@@ -9,6 +9,7 @@ using _250828_universityTask.Models.Requests;
 using _250828_universityTask.Validators;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 // initializes app builder
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 // AppDbContext is database session that manages tables, uses the connection string
 // builder.Services.AddDbContext<AppDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<TryOutDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("NewConnection")));
 
 // builder.Services.AddSingleton<JsonDbContext>();
 builder.Services.AddSingleton<IJsonDbContext, JsonDbContext>();

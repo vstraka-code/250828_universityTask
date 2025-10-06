@@ -3,11 +3,15 @@ namespace _250828_universityTask.Logger
 {
     public class FileLoggerProvider
     {
+        #region Properties
         private readonly string _filePath = @"C:\Users\stv\source\repos\250828_universityTask\250828_universityTask\Logger\logfile.txt";
-        private readonly ILogger<FileLoggerProvider> _logger;
-        private string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        private string _time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         private readonly bool _disableFileIO;
 
+        [Inject] private readonly ILogger<FileLoggerProvider> _logger;
+        #endregion
+
+        #region Constructor
         public FileLoggerProvider(ILogger<FileLoggerProvider> logger, bool disableFileIO = false)
         {
             if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_TEST") == "true")
@@ -23,6 +27,7 @@ namespace _250828_universityTask.Logger
                 Load();
             }
         }
+        #endregion
 
         public void Load()
         {
@@ -32,11 +37,12 @@ namespace _250828_universityTask.Logger
             }
         }
 
+        #region SaveLogging
         public void SaveBehaviourLogging(string message, LoggerTopics topic)
         {
             if (_disableFileIO) return;
 
-            string appendText = "[ " + topic + " ] " + time + " " + message + Environment.NewLine;
+            string appendText = "[ " + topic + " ] " + _time + " " + message + Environment.NewLine;
 
             _logger.LogInformation(message);
             File.AppendAllText(_filePath, appendText);
@@ -46,9 +52,10 @@ namespace _250828_universityTask.Logger
         {
             if (_disableFileIO) return;
 
-            string appendText = "[ Exception ] " + time + " " + message + Environment.NewLine;
+            string appendText = "[ Exception ] " + _time + " " + message + Environment.NewLine;
 
             File.AppendAllText(_filePath, appendText);
         }
+        #endregion
     }
 }

@@ -7,14 +7,18 @@ namespace _250828_universityTask.Cache
 {
     public class Cache
     {
+        #region Properties
+        private string mess = "";
+
         public List<Professor> Professors { get; set; }
         public List<Student> Students { get; set; }
         public List<University> Universities { get; set; }
 
-        private FileLoggerProvider _fileLoggerProvider;
-        private string mess = "";
-        private LoggerTopics topic = LoggerTopics.Cache;
+        [Inject] private FileLoggerProvider _fileLoggerProvider;
+        [Inject] private LoggerTopics _topic = LoggerTopics.Cache;
+        #endregion 
 
+        #region Constructor
         public Cache(FileLoggerProvider fileLoggerProvider)
         {
             Students = new List<Student>();
@@ -22,28 +26,32 @@ namespace _250828_universityTask.Cache
             Universities = new List<University>();
             _fileLoggerProvider = fileLoggerProvider;
         }
+        #endregion
 
+        #region SaveCache
         public void SaveCacheStudents(List<Student> StudentsDb)
         {
             Students = StudentsDb.ToList();
             mess = "Students Cache saved.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
         }
 
         public void SaveCacheProfessors(List<Professor> ProfessorsDb)
         {
             Professors = ProfessorsDb.ToList();
             mess = "Professors Cache saved.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
         }
 
         public void SaveCacheUniversities(List<University> UniversitiesDb)
         {
             Universities = UniversitiesDb.ToList();
             mess = "Univiersities Cache saved.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
         }
+        #endregion
 
+        #region GetCache
         public List<Student> GetCacheStudents()
         {
             return Students;
@@ -58,7 +66,9 @@ namespace _250828_universityTask.Cache
         {
             return Universities;
         }
+        #endregion
 
+        #region RemoveCache
         public void RemoveCacheStudents()
         {
             Students.Clear();
@@ -72,5 +82,6 @@ namespace _250828_universityTask.Cache
         {
             Universities.Clear();
         }
+        #endregion
     }
 }

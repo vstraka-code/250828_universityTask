@@ -10,17 +10,20 @@ namespace _250828_universityTask.Data
     // custom in-memory DB
     public class JsonDbContext : IJsonDbContext
     {
+        #region Properties
         private readonly string _filePath = @"C:\Users\stv\source\repos\250828_universityTask\250828_universityTask\Data\database.json";
+        private string mess = "";
 
         // representing tables
         public List<Professor> Professors { get; set; }
         public List<Student> Students { get; set; }
         public List<University> Universities { get; set; }
 
-        private readonly FileLoggerProvider _fileLoggerProvider;
-        private string mess = "";
-        private LoggerTopics topic = LoggerTopics.JSONDB;
+        [Inject] private readonly FileLoggerProvider _fileLoggerProvider;
+        [Inject] private LoggerTopics _topic = LoggerTopics.JSONDB;
+        #endregion
 
+        #region Constructor
         // constructor
         public JsonDbContext(FileLoggerProvider fileLoggerProvider)
         {
@@ -30,7 +33,9 @@ namespace _250828_universityTask.Data
             _fileLoggerProvider = fileLoggerProvider;
             Load();
         }
+        #endregion
 
+        #region LoadAndSave
         public void Load()
         {
             if (!File.Exists(_filePath))
@@ -54,7 +59,7 @@ namespace _250828_universityTask.Data
                     MapOtherVariables();
 
                     mess = "JSON DB File read (converted from JSON into Objects)";
-                    _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+                    _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
                 }
             }
         }
@@ -100,9 +105,11 @@ namespace _250828_universityTask.Data
             File.WriteAllText(_filePath, json);
 
             mess = "JSON DB File filled with content.";
-            _fileLoggerProvider.SaveBehaviourLogging(mess, topic);
+            _fileLoggerProvider.SaveBehaviourLogging(mess, _topic);
         }
+        #endregion
 
+        #region Mapping
         private Student MapStudent(Student s) => new Student
         {
             Id = s.Id,
@@ -141,5 +148,6 @@ namespace _250828_universityTask.Data
                 professor.AddedStudents = Students.Where(s => s.ProfessorAddedId == professor.Id).ToList();
             }
         }
+        #endregion
     }
 }
